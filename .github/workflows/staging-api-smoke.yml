@@ -1,0 +1,74 @@
+name: Staging API · Readiness Smoke (No Secrets)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'infra/cloudflare/staging-pages-worker.mjs'
+      - 'apps/web/test/stagingApiReadiness.test.mjs'
+      - '.github/workflows/staging-api-smoke.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'infra/cloudflare/staging-pages-worker.mjs'
+      - '.github/workflows/staging-api-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  staging-readonly-smoke:
+    name: Verify staging health and fail-closed HTTP
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Verify isolated staging health across Cloudflare Pages and Worker service
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://reddit-editor-integration-staging.pages.dev'
+          temp="$(mktemp -d)"
+          trap 'rm -rf "$temp"' EXIT
+
+          # Must receive a genuine 200 response; never treat Pages 404 HTML as success.
+          curl -fsSL --retry 5 --retry-all-errors --retry-delay 4 \
+            --connect-timeout 8 --max-time 25 \
+            --dump-header "$temp/headers" --output "$temp/health.json" "$base/health"
+          node -e '
+            const fs = require("node:fs");
+            const x = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+            const expected = x.ok === true && x.stage === "isolated" &&
+              x.d1Connected === true && x.transactionsEmpty === true &&
+              x.workerConnected === true && x.workerHasR2 === true &&
+              x.authEnabled === false;
+            if (!expected) throw Error("STAGING_HEALTH_INTEGRATION_FAILED");
+          ' "$temp/health.json"
+          if grep -Eiq '^set-cookie:' "$temp/headers"; then
+            echo 'SECURITY_FAIL: staging health must not issue auth cookies'
+            exit 1
+          fi
+          if grep -Eiq '^access-control-allow-origin:[[:space:]]*\*' "$temp/headers"; then
+            echo 'SECURITY_FAIL: staging must not grant wildcard cross-origin access'
+            exit 1
+          fi
+          echo 'STAGING_HEALTH_OK: isolated D1 + Cashflow Worker service + R2, no user data.'
+
+          # Non-production OAuth and business APIs must remain inaccessible.
+          for path in \
+            '/api/status' '/auth/google/start' '/auth/google/callback' \
+            '/api/posts' '/api/ga4-insights' '/cashflow-intelligence/api/ledger'
+          do
+            code="$(curl -sSL --connect-timeout 8 --max-time 20 \
+              --output "$temp/blocked.json" --write-out '%{http_code}' "$base$path")"
+            if [ "$code" != 503 ]; then
+              echo "FAIL_CLOSED_ERROR: $path returned $code, expected 503"
+              exit 1
+            fi
+            echo "BLOCKED_OK: $path"
+          done
+          code="$(curl -sSL -X POST --data '{}' --connect-timeout 8 \
+            --max-time 20 --output "$temp/readonly.json" --write-out '%{http_code}' \
+            "$base/cashflow-intelligence/api/save")"
+          [ "$code" = 405 ] || { echo "WRITE_NOT_BLOCKED: $code"; exit 1; }
+          echo 'STAGING_API_READINESS_OK: no OAuth, financial API or writes exposed.'
