@@ -21,7 +21,7 @@ export const PREVIEW_ROUTES = Object.freeze([
 
 // Only navigation URLs for known pages are rewritten. API/auth URLs are
 // intentionally unchanged: GitHub Pages cannot serve protected backends.
-const routeLiteral = /(["'])\/(cashflow-intelligence|ga4-insights|voice-studio|typesetting-tools|youtube-subtitle-writer|wikipedia-writer|rollback-dashboard|vocabulary-insights|starbucks-insights|highlands-insights|payroll-insights|expenses)(?=\/|[?#"'])/g;
+const routeLiteral = /(["'])\/(cashflow-intelligence|ga4-insights|voice-studio|typesetting-tools|youtube-subtitle-writer|wikipedia-writer|rollback-dashboard|vocabulary-insights|starbucks-insights|highlands-insights|payroll-insights|expenses)(?!\/api(?:\/|[?#"']))(?=\/|[?#"'])/g;
 const rootHref = /(\bhref\s*[:=]\s*)(["'])\/\2/g;
 
 export function rewritePreviewNavigation(source) {
