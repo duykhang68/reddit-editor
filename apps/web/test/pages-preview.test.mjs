@@ -39,7 +39,7 @@ test('Pages preview never rewrites protected API/auth or external endpoints', ()
   ].join('\n');
   const result = rewritePreviewNavigation(input);
   assert.match(result, /fetch\("\/api\/ga4-insights/);
-  assert.match(result, /\/reddit-editor\/cashflow-intelligence\/api\/transactions/);
+  assert.match(result, /fetch\('\/cashflow-intelligence\/api\/transactions'\)/);
   assert.match(result, /href="\/auth\/google\/start"/);
   assert.match(result, /https:\/\/duynguyen-reddit-editor.pages.dev\/expenses\//);
 });
