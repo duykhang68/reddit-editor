@@ -6,6 +6,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  workflow_run:
+    workflows: ['CI · Quality Gate']
+    types: [completed]
 
 permissions:
   contents: read
@@ -17,6 +20,9 @@ concurrency:
 jobs:
   validate-preview:
     name: Build and verify 12 static routes
+    # Auto-merge via GITHUB_TOKEN may not emit a new push workflow event.
+    # Accept only a completed, successful main CI run; never PR or failed CI.
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -24,6 +30,8 @@ jobs:
         uses: actions/checkout@v6
         with:
           persist-credentials: false
+          # For workflow_run, build exactly the commit that passed CI.
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -67,6 +75,19 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Refuse stale deployment after main moved
+        env:
+          EXPECTED_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git ls-remote https://github.com/${{ github.repository }}.git refs/heads/main | cut -f1)"
+          if [ -z "$actual" ] || [ "$actual" != "$EXPECTED_SHA" ]; then
+            echo "STAGING_OUTDATED: main has moved; refusing to deploy a stale artifact"
+            exit 1
+          fi
+          echo "CURRENT_MAIN_VERIFIED: $actual"
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
 
@@ -100,6 +121,10 @@ jobs:
               --output "$temp_dir/page.html" "${base}${route}/"
             grep -qi '<html' "$temp_dir/page.html"
             grep -q 'preview-notice.js' "$temp_dir/page.html"
+            if [ "$route" = "rollback-dashboard" ] && grep -qi 'http-equiv="refresh"' "$temp_dir/page.html"; then
+              echo "ROLLBACK_QA_REDIRECT_REGRESSION"
+              exit 1
+            fi
             echo "PAGE_OK: ${base}${route}/"
           done
           echo "STATIC_PREVIEW_OK: 12/12 pages. Backend/OAuth unverified."
