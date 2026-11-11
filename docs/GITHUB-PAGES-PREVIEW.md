@@ -1,13 +1,13 @@
 # GitHub Pages static preview (non-production)
 
-Preview target, **only after GitHub Pages is enabled**: https://duykhang68.github.io/reddit-editor/
+Live static preview: https://duykhang68.github.io/reddit-editor/
 
-## Enable publication (repository owner)
+## Verified publishing setup and post-merge trigger
 
-1. Keep this repository **Private**. GitHub Pages publication from private repositories requires an eligible GitHub plan. A private repository does **not** make the published Pages website private.
-2. In repository **Settings → Pages → Build and deployment**, select **GitHub Actions** as the publishing source. If GitHub blocks this on the account's plan, do not make the repository Public merely to bypass the restriction.
-3. Merge the scoped preview PR only when **CI · Quality Gate** and **Build and verify 12 static routes** pass.
-4. The **Preview · GitHub Pages (Static Only)** workflow builds and deploys from main. The post-deploy job checks the homepage and all twelve deep links.
+1. This repository is **Public** and GitHub Pages is enabled with **GitHub Actions** as the source. Treat both the repository and published preview as publicly accessible: never put credentials, real financial records or private source data into artifacts.
+2. A successful pull-request **CI · Quality Gate** and **Build and verify 12 static routes** are required before merging changes.
+3. Bot auto-merges using `GITHUB_TOKEN` may not trigger a subsequent `push` workflow. The existing auto-merge gatekeeper explicitly dispatches **CI · Quality Gate** after merge. The **Preview · GitHub Pages (Static Only)** workflow also listens for `workflow_run` on that completed CI, but accepts it **only when successful on `main`**.
+4. The deploy job checks that the exact SHA tested by CI is still the current `main`. It refuses stale artifacts, checks all 12 deep links, and fails if Rollback Dashboard reintroduces its deprecated QA auto-redirect. A deployed static preview still cannot execute OAuth or Cloudflare backend functions.
 
 ## Preview-only build and checks
 
