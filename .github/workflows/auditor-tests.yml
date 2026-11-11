@@ -1,0 +1,27 @@
+name: Auditor · Regression Tests
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - auditor.py
+      - tests/test_auditor.py
+      - .github/workflows/auditor.yml
+      - .github/workflows/auditor-tests.yml
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Auditor regression tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_auditor.py' -v

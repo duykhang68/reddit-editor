@@ -1,0 +1,45 @@
+Duy Nguyen Reddit-style Blogger Editor — QA summary (2026-11-06)
+
+Canonical project location confirmed by user:
+- /Users/duynguyen/Downloads/DuyNguyen-Reddit-Blogger-Editor
+- Apply the consolidated hotfix to that copy; the Desktop runtime was an older copy.
+
+Live diagnosis follow-up (2026-11-06):
+- Found localhost:3000 and :5173 running from Desktop/DuyNguyen-Reddit-Blogger-Editor,
+  a different copy from the workspace edited here.
+- With the live backend's authenticated app session, GET /users/self/blogs?view=ADMIN
+  returned HTTP 400 INVALID_ARGUMENT; omitting view returned HTTP 200 and 4 blogs.
+- Removed forced ADMIN view only from blogs.listByUser; added the observed failure to its mock.
+- Live posts.list probes with ADMIN, AUTHOR and default view all returned HTTP 200.
+- Both uppercase DRAFT/UPDATED and lowercase draft/updated returned HTTP 200.
+  The earlier enum hypothesis was not the root cause; uppercase remains schema-compatible.
+- These were read-only probes; no real post was created, edited or published.
+
+API hotfix follow-up (2026-11-06):
+- Compared posts.list parameters with Google's current Blogger v3 discovery document.
+- Added strict mock validation; reproduced the original invalid-argument log before the fix.
+- Changed outgoing status to DRAFT/LIVE and orderBy to UPDATED.
+- Added endpoint + upstream HTTP status to errors and allowlisted query diagnostics to server logs.
+- Regression coverage: draft/live lists, pagination token preservation, invalid filter rejection,
+  error diagnostics without access/refresh/page tokens, and existing OAuth/draft protections.
+- API tests use in-process HTTP streams so they also run where binding a port is restricted.
+- npm run check: 5/5 tests passed, plus Node syntax checks.
+- npm run build: passed with Vite 7.3.7 (existing bundle-size/use-client warnings only).
+- No live Google OAuth/Blogger verification: this copy has no .env or authenticated session.
+- The original QA notes below describe the initial package, before this follow-up.
+
+Completed checks in this environment:
+- Node.js syntax checks: apps/server/index.mjs, apps/server/lib.mjs, scripts/dev.mjs.
+- TypeScript JSX transpile syntax checks: App.jsx, main.jsx, api.js, Callout.js — 0 diagnostics.
+- Node built-in unit tests for core logic (lib.test.mjs): 4/4 passed.
+- Offline static UI mock: desktop 1440px, mobile 390px — no horizontal overflow.
+- 'Choose blog' dialog opens in offline UI mock.
+- Zip contains no actual .env, client secret, or refresh token.
+
+Not verified in this environment:
+- npm install / Vite production build: npm dependency registry access timed out.
+- Mocked API-flow test depends on sanitize-html and could not run without npm install.
+- Google OAuth login, creating a real Blogger draft, updating and publishing: require your own Google credentials and live Blogger account.
+- PREVIEW-UI.html is an offline design sample only. It does NOT connect to Blogger and its controls are illustrative; actual UI lives in apps/web/src/App.jsx.
+
+Mac user should run: npm install; npm test; npm run build; npm run dev.

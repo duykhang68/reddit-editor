@@ -1,0 +1,90 @@
+name: Auditor · Five-Day CI Failure Audit
+
+# GitHub cron day-of-month steps reset each month and cannot model exact
+# five-day intervals. Schedule a cheap daily eligibility check instead.
+# Actual audits occur once every five UTC calendar days from 2026-11-07;
+# workflow_dispatch always triggers an immediate single audit.
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+  issues: write
+
+concurrency:
+  group: auditor-ci-incident-watch
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Audit actionable CI incidents every five days
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - name: Check five-day UTC cadence (manual runs always allowed)
+        id: cadence
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo 'due=true' >> "$GITHUB_OUTPUT"
+            echo 'AUDITOR_MANUAL_RUN'
+            exit 0
+          fi
+          utc_day=$(( $(date -u +%s) / 86400 ))
+          anchor_day=$(( $(date -u -d '2026-11-07' +%s) / 86400 ))
+          if (( utc_day >= anchor_day && (utc_day - anchor_day) % 5 == 0 )); then
+            echo 'due=true' >> "$GITHUB_OUTPUT"
+            echo 'AUDITOR_SCHEDULED_RUN'
+          else
+            echo 'due=false' >> "$GITHUB_OUTPUT"
+            echo 'AUDITOR_NOT_DUE: five-day check is not scheduled today'
+          fi
+
+      - name: Checkout only trusted main
+        if: steps.cadence.outputs.due == 'true'
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Setup Python
+        if: steps.cadence.outputs.due == 'true'
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Validate auditor and researcher
+        if: steps.cadence.outputs.due == 'true'
+        run: |
+          python -m py_compile auditor.py researcher.py
+          python -m unittest discover -s tests -p 'test_auditor.py' -v
+
+      - name: Run one GitHub Actions health scan
+        if: steps.cadence.outputs.due == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python auditor.py --cycles 1
+
+      - name: Publish audit Markdown artifact
+        if: always() && steps.cadence.outputs.due == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: auditor-report-${{ github.run_id }}
+          path: auditor.md
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Publish summary
+        if: always()
+        shell: bash
+        run: |
+          if [[ "${{ steps.cadence.outputs.due }}" != 'true' ]]; then
+            echo 'AUDITOR_NOT_DUE: next eligible scheduled day uses the five-day UTC cadence anchored to 2026-11-07.' >> "$GITHUB_STEP_SUMMARY"
+          elif [[ -f auditor.md ]]; then
+            cat auditor.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'ERROR AUDITOR-NO-REPORT: script stopped before report was written' >> "$GITHUB_STEP_SUMMARY"
+          fi

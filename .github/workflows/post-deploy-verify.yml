@@ -1,0 +1,52 @@
+name: CD · Post-deploy Verification
+
+# Deployment is environment-specific and is NOT performed by release.yml.
+# Run this check after an actual deployment to an HTTPS endpoint.
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_url:
+        description: 'Public HTTPS URL of the newly deployed Editor frontend'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: post-deploy-smoke
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    name: Verify deployed HTTP endpoint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Validate deployment URL
+        env:
+          DEPLOY_URL: ${{ inputs.deployment_url }}
+        run: |
+          python3 - <<'PY'
+          import os
+          from urllib.parse import urlsplit
+          url = os.environ['DEPLOY_URL']
+          parsed = urlsplit(url)
+          if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
+              raise SystemExit('A public HTTPS URL without embedded credentials is required')
+          if parsed.hostname in ('localhost', '127.0.0.1', '::1'):
+              raise SystemExit('Localhost is not a deployed public endpoint')
+          print('Deployment endpoint:', parsed.hostname)
+          PY
+
+      - name: Probe deployed site
+        env:
+          DEPLOY_URL: ${{ inputs.deployment_url }}
+        run: |
+          curl --fail --silent --show-error --location \
+            --proto '=https' --proto-redir '=https' \
+            --retry 3 --retry-delay 2 --max-time 20 \
+            --output /tmp/deployed-page.html "$DEPLOY_URL"
+          test -s /tmp/deployed-page.html
+          grep -Eiq '<html|<!doctype html' /tmp/deployed-page.html
+          echo "POST_DEPLOY_VERIFIED: public HTTPS page returned nonempty HTML"

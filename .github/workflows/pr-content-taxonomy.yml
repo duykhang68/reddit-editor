@@ -1,0 +1,115 @@
+name: PR Content · Change Taxonomy
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: pr-content-taxonomy
+  cancel-in-progress: false
+
+jobs:
+  classify:
+    name: Label PRs by change and affected area
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner,repo} = context.repo;
+            const catalog = {
+              'area:editor': ['DCEBFA','Editor UI and authoring'],
+              'area:oauth': ['F7D8E8','OAuth, sessions, and authentication'],
+              'area:drawio': ['D6F5F3','Draw.io diagram tooling'],
+              'area:github-actions': ['E2D9F8','CI/CD and GitHub automation'],
+              'area:backend': ['E7E8EA','Backend API'],
+              'area:docs': ['D9EAD3','Documentation'],
+              'area:other': ['EDEDED','Unclassified project area'],
+              'content:visualization': ['CDE8FF','Visualization and diagrams'],
+              'change:feature': ['CFE6FF','New functionality'],
+              'change:bugfix': ['FBD7DE','Bug fix'],
+              'change:hotfix': ['FFCFCC','Urgent repair'],
+              'change:documentation': ['E6F4D7','Documentation change'],
+              'change:maintenance': ['E8E8E8','Maintenance and operations'],
+              'change:security': ['FFE3CE','Security fix'],
+              'change:refactor': ['FFF1BA','Refactor without intended behavior change']
+            };
+            const areaFrom = (paths,title) => {
+              const t = title.toLowerCase();
+              if (/draw\.io|drawio|diagram/.test(t) ||
+                  paths.some(p=>/drawio|diagram/i.test(p))) return 'area:drawio';
+              if (paths.some(p=>/^\.github\/|^scripts\/.*ci/i.test(p))) return 'area:github-actions';
+              if (paths.some(p=>/^apps\/server\//.test(p) && /auth|oauth|session/i.test(p)) ||
+                  /\b(oauth|authentication|session|auth)\b/.test(t)) return 'area:oauth';
+              if (paths.some(p=>/^apps\/web\//.test(p))) return 'area:editor';
+              if (paths.some(p=>/^apps\/server\//.test(p))) return 'area:backend';
+              if (paths.every(p=>/^(docs\/|README|CHANGELOG|.*\.md$)/i.test(p))) return 'area:docs';
+              return 'area:other';
+            };
+            const changeFrom = title => {
+              const t = title.toLowerCase();
+              if (/^hotfix(\([^)]*\))?:/.test(t)) return 'change:hotfix';
+              if (/^security(\([^)]*\))?:/.test(t)) return 'change:security';
+              if (/^(fix|bugfix)(\([^)]*\))?:/.test(t)) return 'change:bugfix';
+              if (/^feat(\([^)]*\))?!?:/.test(t)) return 'change:feature';
+              if (/^docs(\([^)]*\))?:/.test(t)) return 'change:documentation';
+              if (/^refactor(\([^)]*\))?:/.test(t)) return 'change:refactor';
+              return 'change:maintenance';
+            };
+            const listed = context.payload.pull_request
+              ? [context.payload.pull_request]
+              : await github.paginate(github.rest.pulls.list,{
+                  owner,repo,base:'main',state:'open',per_page:100
+                });
+            for (const entry of listed) {
+              const {data:pr} = await github.rest.pulls.get({owner,repo,pull_number:entry.number});
+              if (pr.state!=='open' || pr.base.ref!=='main' ||
+                  pr.head.repo?.full_name!==context.repo.owner+'/'+context.repo.repo) continue;
+              const files = await github.paginate(github.rest.pulls.listFiles,{
+                owner,repo,pull_number:pr.number,per_page:100
+              });
+              const paths = files.map(f=>f.filename);
+              if (!paths.length) continue;
+              const area = areaFrom(paths,pr.title||'');
+              const change = changeFrom(pr.title||'');
+              const wanted = [area,change];
+              if (area==='area:drawio' || /visualiz|diagram|chart/i.test(pr.title||'')) {
+                wanted.push('content:visualization');
+              }
+              const existing = await github.paginate(github.rest.issues.listLabelsOnIssue,{
+                owner,repo,issue_number:pr.number,per_page:100
+              });
+              for (const old of existing) {
+                if (/^(area:|change:|content:)/.test(old.name) && !wanted.includes(old.name)) {
+                  await github.rest.issues.removeLabel({
+                    owner,repo,issue_number:pr.number,name:old.name
+                  });
+                }
+              }
+              for (const name of wanted) {
+                const [color,description] = catalog[name];
+                try { await github.rest.issues.getLabel({owner,repo,name}); }
+                catch(e) {
+                  if(e.status!==404) throw e;
+                  try { await github.rest.issues.createLabel({owner,repo,name,color,description}); }
+                  catch(err) { if(err.status!==422) throw err; }
+                }
+              }
+              const missing=wanted.filter(name=>!existing.some(l=>l.name===name));
+              if(missing.length) await github.rest.issues.addLabels({
+                owner,repo,issue_number:pr.number,labels:missing
+              });
+              core.info('PR #'+pr.number+': '+wanted.join(', '));
+            }

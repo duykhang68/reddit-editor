@@ -1,0 +1,234 @@
+name: Auto Approve and Merge · CI Green
+
+# This workflow never checks out or executes untrusted PR code.
+# Privileged metadata operations are restricted to same-repository PRs.
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review]
+    branches: [main]
+  workflow_run:
+    workflows: ["CI · Quality Gate"]
+    types: [completed]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  checks: read
+  statuses: read
+  actions: write
+  issues: write
+
+concurrency:
+  group: auto-approve-and-merge-main
+  cancel-in-progress: false
+
+jobs:
+  approve-and-merge:
+    name: Approve and merge eligible CI-green PRs
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Auto-merge PRs after verified green CI and policy checks
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.AUTO_MERGE_WORKFLOW_TOKEN || github.token }}
+          # Use a workflow-scoped credential when supplied; GITHUB_TOKEN remains
+          # sufficient for ordinary code PRs but cannot merge workflow changes.
+          script: |
+            const { owner, repo } = context.repo;
+            const required = 'Test and build (Node 22)';
+            // Repository rules remain authoritative; no bot self-approval.
+            const elevatedTokenConfigured = ${{ secrets.AUTO_MERGE_WORKFLOW_TOKEN != '' }};
+            const protectedPaths = /^(?:\.github\/workflows\/|\.github\/actions\/|\.github\/CODEOWNERS$|CODEOWNERS$)/;
+            const items = await github.paginate(github.rest.pulls.list, {
+              owner, repo, state: 'open', base: 'main',
+              sort: 'created', direction: 'asc', per_page: 100
+            });
+            core.info('Found ' + items.length + ' open PRs; verifying current HEADs.');
+
+            for (const item of items) {
+              const { data: pr } = await github.rest.pulls.get({
+                owner, repo, pull_number: item.number
+              });
+              if (pr.state !== 'open' || pr.draft ||
+                  pr.head.repo?.full_name !== owner + '/' + repo) {
+                core.info('SKIP PR #' + pr.number + ': closed, draft, or fork.');
+                continue;
+              }
+
+              const sha = pr.head.sha;
+              // Accept only the repository's required CI check on the exact
+              // current head. Non-required historical label failures are ignored.
+              const { data: response } = await github.rest.checks.listForRef({
+                owner, repo, ref: sha, per_page: 100, filter: 'latest'
+              });
+              const ci = response.check_runs.find(c =>
+                c.name === required && c.app?.slug === 'github-actions' &&
+                c.head_sha === sha
+              );
+              if (!ci || ci.status !== 'completed' || ci.conclusion !== 'success') {
+                core.info('WAIT PR #' + pr.number + ': required CI is not green on ' + sha);
+                continue;
+              }
+
+              // Workflow changes are eligible for the SAME automatic merge
+              // after CI passes. They require an elevated credential with
+              // Contents:write and Workflows:write (App or fine-grained PAT).
+              const files = await github.paginate(github.rest.pulls.listFiles, {
+                owner, repo, pull_number: pr.number, per_page: 100
+              });
+              const privilegedChange = files.some(f => protectedPaths.test(f.filename));
+              if (privilegedChange && !elevatedTokenConfigured) {
+                core.warning('TOKEN_SETUP_REQUIRED PR #' + pr.number +
+                  ': set AUTO_MERGE_WORKFLOW_TOKEN with Contents:write and Workflows:write; ' +
+                  'automatic workflow merge will resume without per-PR approval.');
+                continue;
+              }
+              // Prevent merge based on stale CI when main moved.
+              const { data: main } = await github.rest.repos.getBranch({
+                owner, repo, branch: 'main'
+              });
+              const comparison = await github.rest.repos.compareCommitsWithBasehead({
+                owner, repo, basehead: pr.head.sha + '...' + main.commit.sha
+              });
+              if (comparison.data.status === 'ahead' ||
+                  comparison.data.status === 'diverged') {
+                core.info('WAIT PR #' + pr.number +
+                  ': target branch moved; refresh and rerun CI.');
+              }
+
+              const { data: current } = await github.rest.pulls.get({
+                owner, repo, pull_number: pr.number
+              });
+              if (current.head.sha !== sha || current.state !== 'open') {
+                core.info('WAIT PR #' + pr.number + ': head changed during review.');
+                continue;
+              }
+              if (current.mergeable_state === 'behind' ||
+                  comparison.data.status === 'ahead' ||
+                  comparison.data.status === 'diverged') {
+                try {
+                  await github.rest.pulls.updateBranch({
+                    owner, repo, pull_number: pr.number,
+                    expected_head_sha: sha
+                  });
+                  core.notice('UPDATED PR #' + pr.number + ' with latest main; rerun CI required.');
+                  // pull_request synchronize triggers CI for updated HEAD.
+                } catch (e) {
+                  core.warning('UPDATE_BRANCH_FAILED PR #' + pr.number +
+                    ': HTTP ' + (e.status || 'unknown') + ' - ' + e.message);
+                }
+                continue;
+              }
+              if (current.mergeable !== true ||
+                  ['dirty', 'blocked', 'draft', 'unknown'].includes(current.mergeable_state)) {
+                core.info('WAIT PR #' + pr.number + ': GitHub mergeability=' +
+                  current.mergeable_state);
+                continue;
+              }
+
+              // SERIAL MERGE QUEUE: every successful PR merge is separated by
+              // at least 60 seconds. The shared concurrency group prevents
+              // simultaneous workers; one worker merges exactly one PR.
+              const recentClosed = await github.paginate(github.rest.pulls.list, {
+                owner, repo, state: 'closed', base: 'main',
+                sort: 'updated', direction: 'desc', per_page: 100
+              });
+              const latestMergeMs = Math.max(0, ...recentClosed
+                .filter(p => p.merged_at)
+                .map(p => Date.parse(p.merged_at) || 0));
+              const waitMs = Math.max(0, 60000 - (Date.now() - latestMergeMs));
+              if (waitMs > 0) {
+                core.info('QUEUE_WAIT PR #' + pr.number + ': ' +
+                  Math.ceil(waitMs / 1000) + ' seconds until merge window.');
+                await new Promise(resolve => setTimeout(resolve, waitMs + 1000));
+              }
+
+              // Re-check the current HEAD and CI after waiting; no stale
+              // success, draft, or late conflict may pass the queue gate.
+              const { data: gate } = await github.rest.pulls.get({
+                owner, repo, pull_number: pr.number
+              });
+              if (gate.state !== 'open' || gate.draft || gate.head.sha !== sha ||
+                  gate.mergeable !== true ||
+                  ['dirty', 'blocked', 'draft', 'unknown', 'behind'].includes(gate.mergeable_state)) {
+                core.warning('QUEUE_STALE PR #' + pr.number +
+                  ': HEAD or mergeability changed while waiting.');
+                continue;
+              }
+              const { data: finalChecks } = await github.rest.checks.listForRef({
+                owner, repo, ref: sha, per_page: 100, filter: 'latest'
+              });
+              if (!finalChecks.check_runs.some(c =>
+                c.name === required && c.app?.slug === 'github-actions' &&
+                c.head_sha === sha && c.status === 'completed' &&
+                c.conclusion === 'success')) {
+                core.warning('QUEUE_CI_CHANGED PR #' + pr.number +
+                  ': required CI is not green for current HEAD.');
+                continue;
+              }
+
+              try {
+                const { data: result } = await github.rest.pulls.merge({
+                  owner, repo, pull_number: pr.number, sha,
+                  merge_method: 'squash',
+                  commit_title: current.title + ' (#' + pr.number + ')'
+                });
+                if (!result.merged) {
+                  core.warning('MERGE_REJECTED PR #' + pr.number + ': ' + result.message);
+                  continue;
+                }
+                core.notice('AUTO_MERGED PR #' + pr.number + ' at tested head ' + sha);
+                // Dispatch verification explicitly (also safe with PAT-backed merges).
+                try {
+                  await github.rest.actions.createWorkflowDispatch({
+                    owner, repo, workflow_id: 'ci.yml', ref: 'main'
+                  });
+                } catch (e) {
+                  core.warning('POST_MERGE_CI_DISPATCH_FAILED: ' + e.message);
+                }
+                // Record verified merge evidence and refresh collector.md.
+                // Dispatch failures never change the already-successful merge.
+                try {
+                  await github.rest.actions.createWorkflowDispatch({
+                    owner, repo, workflow_id: 'auto-merge-collector.yml', ref: 'main',
+                    inputs: {
+                      pr: String(pr.number),
+                      sha: sha,
+                      run_id: String(context.runId)
+                    }
+                  });
+                  core.notice('COLLECTOR_QUEUED PR #' + pr.number);
+                } catch (e) {
+                  core.warning('COLLECTOR_DISPATCH_FAILED PR #' + pr.number +
+                    ': HTTP ' + (e.status || 'unknown') + ' - ' + e.message);
+                }
+                // A separate run processes the next PR; the 60-second
+                // gate above preserves spacing even when events race.
+                try {
+                  await github.rest.actions.createWorkflowDispatch({
+                    owner, repo, workflow_id: 'auto-approve-and-merge.yml', ref: 'main'
+                  });
+                  core.info('QUEUE_NEXT_DISPATCHED after PR #' + pr.number);
+                } catch (e) {
+                  core.warning('QUEUE_DISPATCH_FAILED: ' + e.message +
+                    '; scheduled reconciliation will recover the queue.');
+                }
+                return;
+              } catch (error) {
+                core.warning('MERGE_BLOCKED PR #' + pr.number +
+                  ': HTTP ' + (error.status || 'unknown') + ' - ' + error.message);
+                if (error.status === 403 && /workflow/i.test(error.message)) {
+                  core.notice('BLOCKED_WORKFLOW_PERMISSION PR #' + pr.number +
+                    ': configure/renew AUTO_MERGE_WORKFLOW_TOKEN (Workflows:write) for automatic retry.');
+                  continue;
+                }
+                if (![403, 405, 409, 422].includes(error.status)) throw error;
+              }
+            }
+            core.notice('No further CI-green, GitHub-mergeable PR in this run.');

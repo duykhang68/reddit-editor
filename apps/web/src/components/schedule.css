@@ -1,0 +1,30 @@
+.schedule-dialog{width:min(520px,calc(100vw - 32px));max-height:92vh;overflow:auto;background:#fff;border:1px solid #e8e8e8;border-radius:20px;box-shadow:0 24px 80px #18202633;color:#252a2c}
+.schedule-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:25px 26px 20px;border-bottom:1px solid #eceff0}
+.schedule-kicker{font-size:10px;letter-spacing:1.4px;color:#b44a12;font-weight:800}
+.schedule-head h2{margin:8px 0 5px;font-size:22px;letter-spacing:-.6px;color:#1b2529}
+.schedule-head p{color:#6c767b;font-size:12px;line-height:1.5;margin:0;max-width:370px;word-break:break-word}
+.schedule-form{padding:24px 26px 25px;display:grid;gap:17px}
+.schedule-form label{display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:750;color:#48545a}
+.schedule-form input,.schedule-form select{width:100%;min-width:0;border:1px solid #dce2e4;border-radius:12px;background:#fff;color:#263039;font-size:14px;padding:11px 12px;min-height:43px;outline-offset:2px}
+.schedule-form input:focus,.schedule-form select:focus{border-color:#e98a52;outline:2px solid #ffe5d6}
+.schedule-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.schedule-preview{display:flex;align-items:flex-start;gap:11px;padding:15px;background:#fffaef;border:1px solid #f7e2b6;border-radius:14px}
+.schedule-preview strong{display:block;font-size:12px;color:#805012;line-height:1.55;overflow-wrap:anywhere}
+.schedule-preview small{display:block;color:#8d7654;font-size:11px;line-height:1.6;margin-top:3px}
+.schedule-dot{display:block;width:9px;height:9px;border-radius:50%;background:#e6aa3a;flex:none;margin-top:5px}
+.schedule-error{font-size:12px;color:#ba2525;background:#fff0ee;border-radius:10px;padding:11px;margin:0}
+.schedule-footer{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-top:7px}
+.schedule-confirm{background:#ff4500;color:white;padding:11px 17px;border-radius:999px;font-size:12px;font-weight:800}
+.schedule-confirm:hover{background:#d83a04}
+.schedule-cancel{background:#fff2f1;color:#a62b25;padding:11px 13px;border-radius:999px;font-size:12px;font-weight:750}
+.schedule-button{width:100%;border:1px solid #f0d9ac;border-radius:999px;padding:11px 15px;background:#fffaf0;color:#946016;font-weight:800;font-size:12px;margin-top:7px}
+.schedule-button:hover{background:#fff1d4}
+.schedule-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #f6e1b3;background:#fffaed;color:#956215;border-radius:99px;font-size:11px;font-weight:750;margin-top:9px;max-width:100%;overflow-wrap:anywhere}
+.schedule-history{margin-top:12px;border-top:1px solid #f0f1f2;padding-top:12px}
+.schedule-history h3{font-size:11px;margin:0 0 7px;color:#6c777c;text-transform:uppercase;letter-spacing:.6px}
+.schedule-history p{font-size:11px;color:#788389;margin:0 0 8px}
+.schedule-history button{width:100%;text-align:left;background:#fafafa;border-radius:9px;margin-bottom:5px;padding:9px;color:#444;font-size:11px}
+.schedule-history button:hover{background:#fff7eb}
+.schedule-history small{display:block;font-size:10px;color:#927037;margin-top:3px}
+.kit-state.is-scheduled{background:#fff2ce;color:#925c09}
+@media(max-width:560px){.schedule-head{padding:18px}.schedule-form{padding:18px}.schedule-fields{grid-template-columns:1fr}}

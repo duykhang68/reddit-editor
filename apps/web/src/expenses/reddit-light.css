@@ -1,0 +1,258 @@
+/*
+ * Daily Expenses · Reddit-inspired LIGHT theme
+ * Design reference: https://redditbrand.lingoapp.com/s/Color-R7y72J
+ * OrangeRed #FF4500 · White #FFFFFF · Reddit Sans · light neutrals.
+ * Separate theme layer intentionally leaves financial logic and base responsive layout untouched.
+ * Use darker orange #D63E05 behind small white button labels for WCAG AA contrast.
+ * This is an independent Duy Nguyen app, not an official Reddit product.
+ */
+:root {
+  color-scheme: light;
+  --ex-bg:#f6f7f8;
+  --ex-card:#ffffff;
+  --ex-cream:#fff8f4;
+  --ex-forest:#252627;
+  --ex-deep:#1a1a1b;
+  --ex-green:#00754a;
+  --ex-green-soft:#eaf6ef;
+  --ex-ink:#1a1a1b;
+  --ex-muted:#68737d;
+  --ex-line:#e8ecef;
+  --ex-shadow:0 10px 34px rgba(22,38,50,.045);
+  --ex-yellow:#a46a10;
+  --ex-red:#b92e36;
+  --ex-orange:#ff4500;
+  --ex-orange-text:#ce3900;
+  --ex-orange-cta:#d63e05;
+  --ex-orange-soft:#fff3ed;
+  --ex-orange-line:#ffd8c9;
+}
+body{background:var(--ex-bg);color:var(--ex-ink)}
+a{color:var(--ex-orange-text)}
+:focus-visible{outline:3px solid #ffb893;outline-offset:2px}
+.ex-page{background:var(--ex-bg);color:var(--ex-ink)}
+.ex-shell{max-width:1320px}
+.ex-panel{background:#fff;border-color:var(--ex-line);box-shadow:var(--ex-shadow);border-radius:20px}
+.ex-eyebrow{color:var(--ex-orange-text);letter-spacing:.13em}
+.ex-section-head h2,.ex-hero h2{color:var(--ex-deep);font-weight:900}
+.ex-section-head p,.ex-identity p{color:var(--ex-muted)}
+
+/* Header follows the existing Starbucks Insights light appearance. */
+.ex-brand-icon{
+  background:var(--ex-orange);
+  color:#fff;
+  box-shadow:0 12px 24px rgba(255,69,0,.16);
+  border-radius:18px;
+}
+.ex-identity h1{color:#171717}
+.ex-identity h1 em{color:var(--ex-orange-text)}
+.ex-identity p{color:#68737d}
+.ex-data-note{background:#eaf6ef;color:#00754a}
+.ex-live-dot{background:#149c5c;box-shadow:0 0 0 4px #d1eddc}
+.ex-outline-link{border-color:#e3e6e8;color:#2b343a;background:#fff}
+.ex-outline-link:hover{background:#fff6f0;border-color:#ffbda6;color:var(--ex-orange-text)}
+
+/* Financial hero: all light surfaces, no dark theme or forest-green block. */
+.ex-hero{
+  position:relative;
+  background:linear-gradient(115deg,#fff 25%,#fffaf7 73%,#fff3ed 100%);
+  border-color:#ece9e8;
+  overflow:hidden;
+}
+.ex-hero::before{
+  content:"";
+  position:absolute;
+  inset:0 auto auto 0;
+  height:3px;
+  width:100%;
+  background:linear-gradient(90deg,#ff4500 0%,#ff9854 47%,#fff0e8 100%);
+}
+.ex-hero h2 span{color:var(--ex-orange-text)}
+.ex-filters label{color:#566169}
+.ex-filters select,.ex-field input,.ex-field select{
+  background:#fff;color:#20272b;border-color:#dce3e7;
+}
+.ex-filters select:focus,.ex-field input:focus,.ex-field select:focus{
+  border-color:#fa7142;box-shadow:0 0 0 3px #ffe8df;
+}
+.ex-summary-main{
+  color:#1a1a1b;
+  background:linear-gradient(137deg,#fff9f5 0%,#fff1e8 100%);
+  border:1px solid #ffe0d4;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+}
+.ex-summary-main::after{
+  border:1px solid rgba(255,69,0,.13);
+  background:radial-gradient(circle at 20% 75%,rgba(255,69,0,.045),transparent 67%);
+}
+.ex-mini-label{color:var(--ex-orange-text)}
+.ex-main-amount{color:#1a1a1b}
+.ex-summary-budget{color:#69747c}
+.ex-summary-budget strong{color:#171717}
+.ex-summary-main .ex-meter{background:#ffddcd}
+.ex-summary-main .ex-meter-unconfigured{
+  background:repeating-linear-gradient(115deg,#fff0e7 0 8px,#ffe2d3 8px 16px)
+}
+.ex-progress-row{color:#59656d}
+.ex-progress-row>span:last-child{color:#424a50;font-weight:800}
+.ex-status-safe{color:#00754a}
+.ex-status-warning{color:#91600f}
+.ex-status-exceeded{color:#b92e36}
+.ex-status-unconfigured{color:#68737d}
+.ex-kpi{background:#fff;border-color:#e8ecef}
+.ex-kpi span{color:#68737d}
+.ex-kpi strong{color:#1a1a1b}
+.ex-kpi small{color:#818c95}
+.ex-hero-actions span{color:#747f87}
+
+/* Readability: primary CTAs are slightly darker than brand orange,
+   but brand marks, indicators and chart highlights stay exact #FF4500. */
+.ex-btn-primary,.ex-btn-forest{
+  background:var(--ex-orange-cta);
+  color:#fff;
+  border-color:var(--ex-orange-cta);
+  box-shadow:0 8px 17px rgba(255,69,0,.14);
+}
+.ex-btn-primary:hover,.ex-btn-forest:hover{
+  background:#b83204;
+  border-color:#b83204;
+  box-shadow:0 10px 18px rgba(255,69,0,.19);
+}
+.ex-btn-subtle{
+  color:#434b51;
+  background:#fff;
+  border-color:#dde4e8;
+}
+.ex-btn-subtle:hover{
+  background:#fff7f3;
+  color:var(--ex-orange-text);
+  border-color:#ffc4ad;
+}
+.ex-btn:active{transform:translateY(0) scale(.99)}
+
+/* Form + user-created categories. */
+.ex-field{color:#46545d}
+.ex-field input::placeholder{color:#87939b}
+.ex-entry-form>.ex-field:first-child input{color:#171717}
+.ex-create-category{
+  color:var(--ex-orange-text);
+  background:#fff0e8;
+  border:1px solid #ffdccd;
+}
+.ex-create-category:hover{
+  color:#b73507;
+  background:#ffe7da;
+  border-color:#ffc7b4;
+}
+.ex-category-create{
+  background:#fff8f4;
+  border-color:#ffdfd1;
+}
+.ex-category-create p{color:#68737d}
+.ex-budget-editor{
+  background:#fffaf6;
+  border-color:#ffdccd;
+}
+
+/* Smart Insights: orange to identify the tool; warning remains amber/red. */
+.ex-smart-panel{background:linear-gradient(140deg,#fff 0%,#fffaf7 100%)}
+.ex-insight{
+  border-color:#e8ecef;
+  background:#fff;
+}
+.ex-insight-icon{
+  background:#fff0e8;
+  color:var(--ex-orange-text);
+}
+.ex-insight h3{color:#22282c}
+.ex-insight p{color:#68737d}
+.ex-insight-alert{
+  background:#fffbf5;
+  border-color:#f0dfc3;
+}
+.ex-insight-alert .ex-insight-icon{
+  background:#fff0d6;
+  color:#99660e;
+}
+.ex-tip-panel{background:#fff3ed;border:1px solid #ffe2d5}
+.ex-tip-panel p{color:#674d42}
+
+/* Category cards: neutral base, six distinct softly tinted icon palettes.
+   Green is reserved for "safe" budget status. */
+.ex-category-card{
+  background:#fff;
+  border-color:#e8ecef;
+}
+.ex-category-card:hover{
+  border-color:#ffc6b0;
+  box-shadow:0 9px 25px rgba(36,38,42,.07);
+}
+.ex-category-top strong{color:#252a2e}
+.ex-category-top small{color:#829099}
+.ex-cat-values strong{color:#20272b}
+.ex-cat-values span{color:#77838b}
+.tone-mint{background:#e9f6f1;color:#147753}
+.tone-coffee{background:#fff0e6;color:#ab592c}
+.tone-sky{background:#e9f5fd;color:#327da9}
+.tone-amber{background:#fff3dd;color:#9b7319}
+.tone-purple{background:#f0ecff;color:#7b64b5}
+.tone-rose{background:#ffebf2;color:#b95f7a}
+.tone-custom{background:#fff1e8;color:var(--ex-orange-text)}
+.ex-badge-unconfigured{background:#f1f3f5;color:#66737b}
+.ex-badge-safe{background:#eaf6ef;color:#087449}
+.ex-badge-warning{background:#fff1d5;color:#94600d}
+.ex-badge-exceeded{background:#ffebe9;color:#ac2f38}
+
+/* Budget progress uses orange, not success-green.
+   Alert thresholds remain yellow and red for instant scanning. */
+.ex-meter{background:#e8ecef}
+.ex-meter>span{background:var(--ex-orange)}
+.ex-meter-warning>span{background:#ecae42}
+.ex-meter-exceeded>span{background:#dc4f50}
+.ex-meter-unconfigured{
+  background:repeating-linear-gradient(115deg,#edf0f2 0 8px,#f6f7f8 8px 16px)
+}
+.ex-summary-main .ex-meter>span{background:var(--ex-orange)}
+.ex-summary-main .ex-meter-warning>span{background:#ecae42}
+.ex-summary-main .ex-meter-exceeded>span{background:#dc4f50}
+.ex-category-warning{color:#94600d}
+.ex-category-alert{color:#ad3537}
+
+/* Daily chart and transaction feed echo the Starbucks Reddit dashboard. */
+.ex-chart{border-bottom-color:#eceff1}
+.ex-chart-bar{background:#ffb48c}
+.ex-chart-bar.is-peak{background:var(--ex-orange)}
+.ex-chart-column span{color:#87939a}
+.ex-chart-foot{color:#69747c}
+.ex-chart-foot strong{color:#303941}
+.ex-count{background:#fff0e8;color:var(--ex-orange-text)}
+.ex-day-group>h3{color:#252a2e}
+.ex-day-group>h3 span{color:#87939b}
+.ex-day-group>h3 .ex-anomaly{background:#fff1de;color:#986214}
+.ex-tx{border-bottom-color:#eceff1}
+.ex-tx-details strong{color:#303941}
+.ex-tx-details small{color:#829099}
+.ex-tx-amount{color:#24292d}
+.ex-tx-buttons button{
+  border-color:#e8ecef;
+  color:#66737b;
+}
+.ex-tx-buttons button:hover{
+  color:var(--ex-orange-text);
+  background:#fff0e8;
+}
+.ex-tx-buttons button:last-child:hover{
+  color:#aa3038;
+  background:#ffebeb;
+}
+.ex-tool-stack .ex-btn{justify-content:flex-start}
+.ex-privacy-note{color:#77838b}
+.ex-empty-icon{background:#fff0e8;color:var(--ex-orange-text)}
+.ex-empty h3{color:#252a2e}
+.ex-footer{color:#89939a}
+
+/* Keep high contrast and calm motion on touch devices. */
+@media(hover:none){.ex-category-card:hover,.ex-btn:hover,.ex-outline-link:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .ex-btn,.ex-outline-link,.ex-category-card,.ex-meter>span,.ex-chart-bar{transition:none!important}
+}

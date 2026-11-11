@@ -1,0 +1,13 @@
+{
+  "name": "@duynguyen/editor-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --env-file=.env index.mjs",
+    "start": "node --env-file=.env index.mjs"
+  },
+  "dependencies": {
+    "sanitize-html": "^2.17.0"
+  }
+}

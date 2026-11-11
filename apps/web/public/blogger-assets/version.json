@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "name": "duynguyen-blogger-theme-assets",
+  "repository": "duykhang68/tetdinhmuiblog",
+  "assets": ["theme.css", "theme.js"],
+  "initialReleaseBehavior": "no-visual-change"
+}

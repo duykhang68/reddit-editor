@@ -1,0 +1,22 @@
+{
+  "name": "duynguyen-reddit-blogger-editor",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/web",
+    "apps/server"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node scripts/dev-sync.mjs",
+    "dev:sync": "node scripts/dev-sync.mjs",
+    "dev:local": "node scripts/dev.mjs",
+    "build": "npm run build --workspace @duynguyen/editor-web",
+    "start": "npm run start --workspace @duynguyen/editor-server",
+    "test": "node --test apps/server/test/*.test.mjs apps/web/test/*.test.mjs",
+    "check": "node --check apps/server/index.mjs && node --check apps/server/lib.mjs && node --check scripts/dev.mjs && node --check scripts/dev-sync.mjs && npm test"
+  }
+}

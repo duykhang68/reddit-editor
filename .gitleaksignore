@@ -1,0 +1,7 @@
+# Reviewed false positives — 2026-11-11
+# GA4 error code identifiers, not credentials
+apps/web/functions/api/ga4-public.js:generic-api-key:68
+
+# Browser localStorage identifiers, not credentials
+apps/web/src/expenses/model.js:generic-api-key:2
+apps/web/src/starbucks-insights/model.js:generic-api-key:4

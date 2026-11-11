@@ -1,0 +1,42 @@
+node_modules/
+**/node_modules/
+**/.env
+**/.env.*
+!**/.env.example
+**/dist/
+apps/server/data/*
+!apps/server/data/.gitkeep
+.DS_Store
+*.log
+
+# Local backups
+.hotfix-backups/
+
+# Secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.pem
+*.p12
+*.pfx
+
+# Generated / local
+node_modules/
+dist/
+.wrangler/
+.DS_Store
+*.backup
+*.tar.gz
+*.zip
+
+# Cloudflare generated files
+**/.wrangler/
+
+# Local credentials
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*

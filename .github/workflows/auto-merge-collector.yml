@@ -1,0 +1,88 @@
+name: Auto-Merge Collector · Visual Insights
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: 'Auto-merged PR number (optional for scheduled rebuild)'
+        required: false
+        type: string
+      sha:
+        description: 'Exact tested PR head SHA'
+        required: false
+        type: string
+      run_id:
+        description: 'Auto-merge workflow run ID'
+        required: false
+        type: string
+  schedule:
+    - cron: '23 1 * * *'
+
+permissions:
+  contents: write
+  actions: write
+  checks: read
+  pull-requests: read
+
+concurrency:
+  group: collector-report-main
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    name: Refresh collector.md and merge evidence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build verified Markdown dashboard
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          COLLECT_PR: ${{ inputs.pr }}
+          COLLECT_SHA: ${{ inputs.sha }}
+          COLLECT_RUN: ${{ inputs.run_id }}
+        run: |
+          args=()
+          if [[ -n "$COLLECT_PR" || -n "$COLLECT_SHA" || -n "$COLLECT_RUN" ]]; then
+            [[ "$COLLECT_PR" =~ ^[0-9]+$ ]] || exit 2
+            [[ "$COLLECT_SHA" =~ ^[0-9a-f]{40}$ ]] || exit 2
+            [[ "$COLLECT_RUN" =~ ^[0-9]+$ ]] || exit 2
+            args=(--pr "$COLLECT_PR" --sha "$COLLECT_SHA" --run-id "$COLLECT_RUN")
+          fi
+          python collector.py "${args[@]}"
+
+      - name: Commit dashboard and evidence if changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add collector.md data/collector-events.json
+          if git diff --cached --quiet; then
+            echo "COLLECTOR_UNCHANGED"
+            exit 0
+          fi
+          git commit -m "docs(collector): update auto-merge evidence dashboard"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              echo "COLLECTOR_PUBLISHED"
+              # GITHUB_TOKEN pushes do not normally trigger CI, so dispatch
+              # the required quality gate explicitly for this new main HEAD.
+              gh workflow run ci.yml --ref main
+              echo "COLLECTOR_CI_DISPATCHED"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Collector commit not published after retries" >&2
+          exit 1

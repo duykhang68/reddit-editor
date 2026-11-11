@@ -1,0 +1,24 @@
+.series-panel h2,.blueprint-panel h2,.series-index h2{margin:0 0 12px;font-size:17px;color:var(--ink,#192025)}
+.series-toggle{display:flex!important;align-items:flex-start;gap:8px;font-weight:750;font-size:12px;line-height:1.6;cursor:pointer}
+.series-toggle input{flex-shrink:0;margin-top:4px;accent-color:#ff4500}
+.series-fields{display:grid;gap:13px;margin-top:15px}
+.series-fields label,.blueprint-panel label{display:grid;gap:6px;font-size:12px;font-weight:700;color:#41515a}
+.series-fields input,.blueprint-panel select{display:block;width:100%;min-width:0;border:1px solid #dce2e5;background:#fff;border-radius:9px;padding:10px;font-size:13px;color:#192025}
+.series-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.series-meter-head{display:flex;justify-content:space-between;font-size:12px;gap:8px}
+.series-meter{height:9px;overflow:hidden;background:#f0f2f4;border-radius:999px}
+.series-meter>span{display:block;height:100%;background:#ff4500;border-radius:inherit;transition:width .2s ease}
+.series-days,.series-note,.blueprint-panel p,.series-index-name{font-size:12px;line-height:1.6;color:#5c6b75;margin:0;overflow-wrap:anywhere}
+.series-error{color:#aa2718;font-size:12px;font-weight:700;margin:0}
+.blueprint-panel label{margin-top:10px}
+.series-table-scroll{overflow-x:auto;margin-top:12px}
+.series-index table{width:100%;border-collapse:collapse;font-size:12px}
+.series-index th,.series-index td{padding:9px 6px;border-bottom:1px solid #e4e8ea;text-align:left;vertical-align:top}
+.series-index th{font-size:11px;color:#69757d}
+.series-current{background:#fff2e9}
+.series-current td:first-child{font-weight:800;color:#bf3b0a}
+.series-current-tag{display:inline-block;background:#ff4500;color:white;padding:2px 6px;border-radius:7px;font-size:10px;font-weight:700;margin-left:5px;white-space:nowrap}
+.series-index td a{text-decoration:underline;color:#a93e0d;overflow-wrap:anywhere}
+.series-index button{margin-top:9px}
+@media(max-width:460px){.series-field-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.series-meter>span{transition:none}}

@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Tet Dinh Mui Branding Guideline — hệ thống màu sắc, typography, components và quy tắc UI cho Tết Đinh Mùi Blog.">
+  <title>Tet Dinh Mui Branding Guideline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reddit+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--orange:#ff4500;--orange-aa:#c93600;--orange-hover:#ad2e00;--canvas:#f2f6f7;--surface:#fff;--ink:#1b2426;--muted:#596870;--line:#d7dfe2;--tint:#fff0e9;--radius:18px;--shadow:0 4px 28px rgba(27,36,38,.055)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--canvas);color:var(--ink);font-family:"Reddit Sans",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.65}
+    a{color:var(--orange-aa);text-underline-offset:3px}
+    a:hover{color:var(--orange-hover)}
+    button,input{font:inherit}
+    button{cursor:pointer}
+    :focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+    .skip{position:absolute;top:-60px;left:12px;background:var(--surface);padding:8px 12px;z-index:50}
+    .skip:focus{top:8px}
+    .topbar{height:76px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.97);position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 max(22px,calc((100vw - 1440px)/2))}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;min-width:0}
+    .brand-mark{width:40px;height:40px;background:var(--orange);border-radius:13px;display:grid;place-items:center;color:#1b2426;font-weight:900;font-size:18px;transform:rotate(-7deg);flex:none}
+    .brand-mark span{transform:rotate(7deg);color:#fff}
+    .brand strong{display:block;font-size:16px;letter-spacing:-.025em;line-height:1.2}
+    .brand small{display:block;color:var(--muted);font-weight:600;letter-spacing:.025em;font-size:11px}
+    .top-actions{display:flex;gap:8px;align-items:center}
+    .shell{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;padding:36px 24px 90px}
+    .rail{position:sticky;top:112px;align-self:start}
+    .rail-head{color:var(--muted);font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin:4px 0 14px 14px}
+    .rail a{display:flex;gap:11px;align-items:center;border-radius:12px;text-decoration:none;padding:11px 14px;color:#40515a;font-size:13px;font-weight:700;margin:3px 0}
+    .rail a:hover,.rail a.active{background:#fff;color:var(--orange-aa);box-shadow:0 1px 3px rgba(0,0,0,.03)}
+    .rail a span{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+    .rail-note{margin:25px 6px 0;padding:17px;border:1px solid var(--line);border-radius:16px;background:#fff;font-size:12px;color:var(--muted)}
+    .main{min-width:0}
+    .eyebrow{color:var(--orange-aa);font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+    .hero{background:#fff;border:1px solid var(--line);border-radius:26px;min-height:300px;padding:50px 48px;position:relative;overflow:hidden}
+    .hero:after{content:"";width:270px;height:270px;background:var(--orange);position:absolute;border-radius:46%;right:-60px;top:-95px;opacity:.085;pointer-events:none}
+    h1{font-size:clamp(34px,4vw,59px);line-height:1.1;letter-spacing:-.055em;margin:16px 0 16px;max-width:810px;font-weight:900}
+    .hero p{font-size:17px;max-width:720px;color:#485a62;margin:0}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:27px}
+    .btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);padding:11px 18px;border-radius:999px;text-decoration:none;font-size:13px;font-weight:800;display:inline-flex;gap:8px;align-items:center;justify-content:center;transition:background .15s,border-color .15s,color .15s}
+    .btn:hover{background:var(--tint);border-color:#ffc7b5;color:var(--orange-aa)}
+    .btn.primary{background:var(--orange-aa);border-color:var(--orange-aa);color:#fff}
+    .btn.primary:hover{background:var(--orange-hover);border-color:var(--orange-hover);color:#fff}
+    .btn.light{background:var(--tint);color:var(--orange-aa);border-color:var(--tint)}
+    .btn.light:hover{background:#ffe1d3}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:20px 0 42px}
+    .stat{background:#fff;border:1px solid var(--line);border-radius:17px;padding:20px 22px}
+    .stat strong{display:block;font-size:31px;letter-spacing:-.04em;line-height:1.15}
+    .stat span{display:block;color:var(--muted);font-weight:700;font-size:12px;margin-top:8px}
+    section{scroll-margin-top:106px}
+    .section{margin-top:48px}
+    .section-title{display:flex;align-items:start;justify-content:space-between;gap:18px;margin-bottom:18px}
+    .section-title h2{font-size:clamp(23px,2.6vw,33px);letter-spacing:-.04em;line-height:1.2;margin:5px 0 4px}
+    .section-title p{color:var(--muted);margin:0;max-width:740px}
+    .section-index{color:var(--orange-aa);font-weight:900;font-size:12px;letter-spacing:.09em}
+    .paper{border:1px solid var(--line);background:#fff;border-radius:20px;padding:25px}
+    .color-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+    .filters{display:flex;gap:7px;flex-wrap:wrap}
+    .chip{border:1px solid var(--line);border-radius:999px;padding:8px 13px;background:#fff;color:#42535a;font-weight:800;font-size:12px}
+    .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+    .palette{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+    .swatch{border:1px solid var(--line);background:#fff;text-align:left;border-radius:16px;overflow:hidden;padding:0;min-width:0}
+    .swatch:hover{border-color:#ff8f69;box-shadow:0 3px 11px rgba(255,69,0,.12)}
+    .swatch-color{display:block;height:96px;border-bottom:1px solid rgba(0,0,0,.04)}
+    .swatch-body{padding:13px 14px;display:block}
+    .swatch-name{font-size:13px;font-weight:900;display:block}
+    .swatch-hex{font-size:12px;color:var(--muted);font-weight:700;display:block;margin-top:1px}
+    .swatch-role{font-size:11px;color:#64767d;display:block;margin-top:5px;min-height:18px}
+    .legend{margin-top:15px;font-size:12px;color:var(--muted)}
+    .split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .type-sample h3{margin:0 0 8px;font-size:20px;letter-spacing:-.02em}
+    .type-display{font-size:clamp(40px,5vw,64px);line-height:1.04;letter-spacing:-.045em;font-weight:900;margin:16px 0}
+    .micro{font-size:12px;color:var(--muted);font-weight:700}
+    .demo p{max-width:560px;color:#44565e}
+    .demo-actions{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}
+    .demo-link{color:var(--orange-aa);font-weight:800}
+    .form-label{display:block;font-weight:800;font-size:13px;margin:18px 0 7px}
+    .input{display:block;width:100%;max-width:480px;border:1px solid #b8c7cc;padding:11px 14px;border-radius:12px;background:#fff;color:var(--ink)}
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:19px}
+    .tag{display:inline-block;border-radius:99px;background:#fff0e9;color:#9f310e;padding:6px 12px;font-size:12px;font-weight:800}
+    .tag.teal{background:#d3f7f3;color:#00645f}.tag.blue{background:#e0efff;color:#02315c}.tag.gold{background:#fff3c3;color:#6c4b00}
+    .preview{background:#f2f6f7;border:1px solid var(--line);border-radius:16px;padding:20px}
+    .preview-card{background:#fff;border:1px solid #d7dfe2;border-radius:16px;padding:22px;box-shadow:var(--shadow);max-width:560px}
+    .preview-card h3{margin:6px 0 5px;line-height:1.3;font-size:22px}
+    .preview-card p{margin:0 0 14px;color:#576f79}
+    .preview-topline{font-size:11px;color:#6b777e;font-weight:800;letter-spacing:.08em}
+    .contrast{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:16px}
+    .contrast-sample{border-radius:13px;padding:19px 23px;font-weight:900;min-width:215px;text-align:center;background:#c93600;color:white}
+    .contrast select{border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:inherit;background:white;color:var(--ink)}
+    .pass{color:#176747;font-weight:900}.warning{color:#b42e00;font-weight:900}
+    .rules{margin:0;padding-left:19px}.rules li{margin:10px 0}
+    .rule-good{border-left:4px solid #11a06b}.rule-bad{border-left:4px solid #ff4500}
+    .code-wrap{background:#172e35;color:#eef8f8;border-radius:15px;overflow:auto;padding:20px;max-width:100%;font:12px/1.75 ui-monospace,Consolas,monospace;white-space:pre}
+    .caption{font-size:12px;color:var(--muted)}
+    .source-list{padding-left:20px;overflow-wrap:anywhere}
+    .source-list li{margin:10px 0}
+    .footer{padding:38px 0 15px;color:#617178;font-size:12px}
+    #toast{position:fixed;bottom:20px;right:20px;background:#1b2426;color:#fff;border-radius:10px;padding:10px 16px;opacity:0;transform:translateY(10px);transition:.2s;pointer-events:none;z-index:20}
+    #toast.show{opacity:1;transform:translateY(0)}
+    [hidden]{display:none!important}
+    @media(max-width:1060px){.palette{grid-template-columns:repeat(3,minmax(0,1fr))}.shell{grid-template-columns:188px minmax(0,1fr);gap:24px}.hero{padding:39px 32px}}
+    @media(max-width:760px){.topbar{height:69px;padding:0 16px}.top-actions .source-btn{display:none}.shell{display:block;padding:24px 15px 60px}.rail{position:static;display:flex;overflow-x:auto;gap:4px;padding-bottom:9px;margin-bottom:15px;scrollbar-width:thin}.rail-head,.rail-note{display:none}.rail a{flex:none;white-space:nowrap}.hero{padding:30px 23px;min-height:unset}.hero p{font-size:15px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat{padding:15px}.stat strong{font-size:25px}.split{grid-template-columns:1fr}.palette{grid-template-columns:repeat(2,minmax(0,1fr))}.section{margin-top:36px}.paper{padding:17px}}
+    @media(max-width:380px){.palette{grid-template-columns:1fr 1fr;gap:8px}.swatch-color{height:76px}.swatch-body{padding:10px}.brand strong{font-size:13px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#overview">Đi tới nội dung</a>
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="Tet Dinh Mui Branding Guideline">
+      <span class="brand-mark" aria-hidden="true"><span>TĐ</span></span>
+      <span><strong>Tet Dinh Mui <span style="color:#c93600">Brand System</span></strong><small>DESIGN GUIDE · LIGHT EDITION</small></span>
+    </a>
+    <div class="top-actions">
+      <a class="btn source-btn" target="_blank" rel="noopener noreferrer" href="https://redditbrand.lingoapp.com/s/Overview-orqY1E?v=46">Reddit reference ↗</a>
+      <a class="btn primary" href="https://duynguyen99.blogspot.com/" target="_blank" rel="noopener noreferrer">Xem blog ↗</a>
+    </div>
+  </header>
+  <div class="shell">
+    <nav class="rail" aria-label="Mục lục thương hiệu">
+      <p class="rail-head">Design foundations</p>
+      <a class="active" href="#overview"><span>01</span> Tổng quan</a>
+      <a href="#colors"><span>02</span> Hệ màu</a>
+      <a href="#typography"><span>03</span> Typography</a>
+      <a href="#components"><span>04</span> UI components</a>
+      <a href="#rules"><span>05</span> Quy tắc áp dụng</a>
+      <a href="#developer"><span>06</span> Developer tokens</a>
+      <a href="#sources"><span>07</span> Nguồn tham khảo</a>
+      <div class="rail-note"><strong>Phạm vi thiết kế</strong><br>Hệ thống giao diện riêng cho Tết Đinh Mùi Blog, tham khảo tinh thần Reddit. Không phải website hay tài sản chính thức của Reddit.</div>
+    </nav>
+    <main class="main" id="overview">
+      <div class="hero">
+        <span class="eyebrow">Tết Đinh Mùi / Visual identity / V1.0</span>
+        <h1>A brighter, bolder<br>blog experience<span style="color:#ff4500">.</span></h1>
+        <p>Ngôn ngữ giao diện riêng cho Tết Đinh Mùi Blog: nền sáng, OrangeRed có điểm nhấn, nội dung dễ đọc, CTA rõ ràng và thống nhất trên mọi màn hình.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#colors">Khám phá bảng màu →</a>
+          <a class="btn" href="#components">Xem thành phần UI</a>
+        </div>
+      </div>
+      <div class="stats" aria-label="Tổng quan quy chuẩn">
+        <div class="stat"><strong>12</strong><span>Mẫu màu tham khảo</span></div>
+        <div class="stat"><strong>07</strong><span>Nhóm hướng dẫn</span></div>
+        <div class="stat"><strong>01</strong><span>Font family</span></div>
+        <div class="stat"><strong>0</strong><span>Thay đổi layout blog</span></div>
+      </div>
+      <section class="section" id="colors">
+        <div class="section-title"><div><span class="section-index">02 / COLOR SYSTEM</span><h2>Color is the signature.</h2><p>Màu cam đỏ là điểm nhấn nhận diện; màu trắng và trung tính chiếm phần lớn diện tích. Nhấn vào từng màu để sao chép HEX.</p></div></div>
+        <div class="paper">
+          <div class="color-toolbar">
+            <div class="filters" role="group" aria-label="Lọc màu">
+              <button class="chip" data-filter="all" aria-pressed="true">Tất cả 12</button>
+              <button class="chip" data-filter="brand" aria-pressed="false">Brand</button>
+              <button class="chip" data-filter="neutral" aria-pressed="false">Neutrals</button>
+              <button class="chip" data-filter="support" aria-pressed="false">Support</button>
+            </div>
+            <span class="micro" id="color-count">Đang hiển thị 12 màu</span>
+          </div>
+          <div class="palette" id="palette">
+            <button class="swatch" data-group="brand" data-hex="#FF4500" aria-label="Sao chép OrangeRed #FF4500"><span class="swatch-color" style="background:#ff4500"></span><span class="swatch-body"><span class="swatch-name">OrangeRed</span><span class="swatch-hex">#FF4500</span><span class="swatch-role">Brand · chính</span></span></button>
+            <button class="swatch" data-group="brand" data-hex="#FB133A" aria-label="Sao chép OrangeRed 600 #FB133A"><span class="swatch-color" style="background:#fb133a"></span><span class="swatch-body"><span class="swatch-name">OrangeRed 600</span><span class="swatch-hex">#FB133A</span><span class="swatch-role">Gradient · tham khảo</span></span></button>
+            <button class="swatch" data-group="neutral" data-hex="#FFFFFF" aria-label="Sao chép Beluga #FFFFFF"><span class="swatch-color" style="background:#ffffff"></span><span class="swatch-body"><span class="swatch-name">Beluga</span><span class="swatch-hex">#FFFFFF</span><span class="swatch-role">Card / nền trắng</span></span></button>
+            <button class="swatch" data-group="neutral" data-hex="#F2F6F7" aria-label="Sao chép Dugong #F2F6F7"><span class="swatch-color" style="background:#f2f6f7"></span><span class="swatch-body"><span class="swatch-name">Dugong</span><span class="swatch-hex">#F2F6F7</span><span class="swatch-role">Canvas · sáng</span></span></button>
+            <button class="swatch" data-group="neutral" data-hex="#D7DFE2" aria-label="Sao chép Dolphin #D7DFE2"><span class="swatch-color" style="background:#d7dfe2"></span><span class="swatch-body"><span class="swatch-name">Dolphin</span><span class="swatch-hex">#D7DFE2</span><span class="swatch-role">Border / divider</span></span></button>
+            <button class="swatch" data-group="neutral" data-hex="#BBC7CC" aria-label="Sao chép Seal #BBC7CC"><span class="swatch-color" style="background:#bbc7cc"></span><span class="swatch-body"><span class="swatch-name">Seal</span><span class="swatch-hex">#BBC7CC</span><span class="swatch-role">Subtle neutral</span></span></button>
+            <button class="swatch" data-group="neutral" data-hex="#7A9299" aria-label="Sao chép Narwhal #7A9299"><span class="swatch-color" style="background:#7a9299"></span><span class="swatch-body"><span class="swatch-name">Narwhal</span><span class="swatch-hex">#7A9299</span><span class="swatch-role">Secondary neutral</span></span></button>
+            <button class="swatch" data-group="neutral" data-hex="#172E35" aria-label="Sao chép Urchin #172E35"><span class="swatch-color" style="background:#172e35"></span><span class="swatch-body"><span class="swatch-name">Urchin</span><span class="swatch-hex">#172E35</span><span class="swatch-role">Dark tone · không làm nền chính</span></span></button>
+            <button class="swatch" data-group="neutral" data-hex="#000000" aria-label="Sao chép Squid Ink #000000"><span class="swatch-color" style="background:#000"></span><span class="swatch-body"><span class="swatch-name">Squid Ink</span><span class="swatch-hex">#000000</span><span class="swatch-role">Chữ đậm / điểm nhấn</span></span></button>
+            <button class="swatch" data-group="support" data-hex="#FFA800" aria-label="Sao chép Mango #FFA800"><span class="swatch-color" style="background:#ffa800"></span><span class="swatch-body"><span class="swatch-name">Mango 500</span><span class="swatch-hex">#FFA800</span><span class="swatch-role">Illustration / data</span></span></button>
+            <button class="swatch" data-group="support" data-hex="#00CCC0" aria-label="Sao chép Mint #00CCC0"><span class="swatch-color" style="background:#00ccc0"></span><span class="swatch-body"><span class="swatch-name">Mint 500</span><span class="swatch-hex">#00CCC0</span><span class="swatch-role">Secondary visualization</span></span></button>
+            <button class="swatch" data-group="support" data-hex="#02315C" aria-label="Sao chép Alien #02315C"><span class="swatch-color" style="background:#02315c"></span><span class="swatch-body"><span class="swatch-name">Alien 900</span><span class="swatch-hex">#02315C</span><span class="swatch-role">Data / contrast</span></span></button>
+          </div>
+          <p class="legend">Các mã màu phía trên là những màu đã kiểm chứng từ Reddit Brand Guidelines (tài liệu 2022). Vai trò hiển thị trên trang là cách Tết Đinh Mùi Blog áp dụng, không phải bảng quy định UI chính thức của Reddit.</p>
+        </div>
+      </section>
+      <section class="section" id="typography">
+        <div class="section-title"><div><span class="section-index">03 / TYPOGRAPHY</span><h2>Say it clearly.</h2><p>Reddit Sans với glyph rõ, nét chữ thân thiện. Ưu tiên tính dễ đọc cho bài viết dài và tiếng Việt có dấu.</p></div></div>
+        <div class="split">
+          <div class="paper type-sample">
+            <span class="micro">DISPLAY · REDDIT SANS 900</span>
+            <div class="type-display">Aa Á ă Đ<br>Stories.</div>
+            <p class="caption">Dùng cho tiêu đề lớn và section heading; tránh giảm độ tương phản.</p>
+          </div>
+          <div class="paper demo">
+            <span class="micro">BODY · REDDIT SANS 400–700</span>
+            <h3>Một bài blog đáng đọc</h3>
+            <p>Công nghệ, du lịch, phim ảnh và trải nghiệm thường nhật. Nội dung cần có hệ thống phân cấp rõ, khoảng cách nhất quán, liên kết dễ nhận biết và chữ đủ tương phản trên nền sáng.</p>
+            <p class="micro">Đề xuất cho blog · 16px / line-height 1.75</p>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="components">
+        <div class="section-title"><div><span class="section-index">04 / UI COMPONENTS</span><h2>Components that feel familiar.</h2><p>Đây là bản demo tương tác: nút bấm, form, tag và card trên cùng hệ màu. Không can thiệp layout hiện tại của Blogger.</p></div></div>
+        <div class="split">
+          <div class="paper demo">
+            <span class="micro">BUTTONS / LINKS / INPUTS</span>
+            <div class="demo-actions"><button class="btn primary" type="button" id="demo-cta">Đọc bài viết →</button><button class="btn" type="button" id="demo-secondary">Xem thêm</button><button class="btn light" type="button" id="demo-light">Lưu ý</button></div>
+            <a class="demo-link" href="https://duynguyen99.blogspot.com/" target="_blank" rel="noopener noreferrer">Liên kết bài viết ↗</a>
+            <label class="form-label" for="demo-input">Tìm nội dung</label>
+            <input class="input" id="demo-input" placeholder="Tìm kiếm trên blog..." autocomplete="off">
+            <div class="tags"><span class="tag">Bài viết mới</span><span class="tag teal">Trải nghiệm</span><span class="tag blue">Công nghệ</span><span class="tag gold">Review</span></div>
+          </div>
+          <div class="paper">
+            <span class="micro">POST CARD / LIGHT SURFACE</span>
+            <div class="preview" style="margin-top:12px">
+              <div class="preview-card"><span class="preview-topline">TẾT ĐINH MÙI BLOG · UI SYSTEM</span><h3>Đọc câu chuyện theo cách đơn giản nhất.</h3><p>Chất lượng nội dung là trung tâm. OrangeRed giúp người đọc nhìn thấy những hành động quan trọng mà không gây áp lực cho mắt.</p><a class="btn primary" href="https://duynguyen99.blogspot.com/" target="_blank" rel="noopener noreferrer">Khám phá blog →</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="paper" style="margin-top:16px">
+          <h3 style="margin:0 0 7px;font-size:19px">Quick contrast check</h3>
+          <p style="margin:0 0 10px;color:var(--muted)">OrangeRed #FF4500 trên nền trắng không đạt WCAG AA cho chữ thường. Các CTA chữ trắng dùng biến thể tối hơn #C93600 để đạt tương phản ít nhất 4.5:1.</p>
+          <div class="contrast">
+            <label for="contrast-select"><strong>Màu nút</strong></label>
+            <select id="contrast-select"><option value="#C93600">Accessible Orange #C93600</option><option value="#FF4500">Brand OrangeRed #FF4500</option><option value="#B93100">Hover Orange #B93100</option></select>
+            <div class="contrast-sample" id="contrast-sample">Button preview</div>
+            <span id="contrast-result" class="pass" role="status">5.24:1 · WCAG AA Pass</span>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="rules">
+        <div class="section-title"><div><span class="section-index">05 / DO &amp; DON'T</span><h2>Be consistent, not noisy.</h2><p>Các quy tắc cụ thể để hotfix blog không phá vỡ cấu trúc.</p></div></div>
+        <div class="split">
+          <div class="paper rule-good"><h3 style="margin:0 0 10px">✓ Nên làm</h3><ul class="rules"><li>Nền trắng/canvas sáng chiếm ưu thế; cam là điểm nhấn.</li><li>Chữ thân bài đủ tương phản, tiêu đề dễ quét.</li><li>Trạng thái hover/focus rõ ràng, không dựa vào màu duy nhất.</li><li>Giữ kích thước, spacing, grid và breakpoint Blogger hiện có.</li><li>Thống nhất màu liên kết, button, tab và chip.</li></ul></div>
+          <div class="paper rule-bad"><h3 style="margin:0 0 10px">✕ Tránh làm</h3><ul class="rules"><li>Đưa dark mode làm giao diện mặc định.</li><li>Dùng #FF4500 cho đoạn chữ nhỏ trên nền trắng.</li><li>Tô đỏ mọi bề mặt khiến người đọc mất điểm tập trung.</li><li>Đổi số cột, thứ tự widget, margin hệ thống và layout.</li><li>Dùng logo, mascot hoặc tên Reddit như nhận diện blog.</li></ul></div>
+        </div>
+      </section>
+      <section class="section" id="developer">
+        <div class="section-title"><div><span class="section-index">06 / DEVELOPER HANDOFF</span><h2>Tokens, ready to ship.</h2><p>Hệ token riêng của Tết Đinh Mùi. Nút sao chép lấy đúng CSS để triển khai nhất quán.</p></div></div>
+        <div class="paper">
+          <div class="color-toolbar"><span class="micro">BLOGGER UI TOKENS · LIGHT MODE</span><button class="btn" id="copy-tokens" type="button">Sao chép CSS tokens</button></div>
+          <pre class="code-wrap" id="token-code">:root {
+  --tdm-brand: #FF4500;
+  --tdm-action: #C93600;
+  --tdm-action-hover: #B93100;
+  --tdm-canvas: #F2F6F7;
+  --tdm-surface: #FFFFFF;
+  --tdm-ink: #1B2426;
+  --tdm-muted: #596870;
+  --tdm-border: #D7DFE2;
+  --tdm-brand-soft: #FFF0E9;
+  --tdm-font: 'Reddit Sans', Arial, sans-serif;
+}</pre>
+          <p class="caption">Màu --tdm-action, --tdm-action-hover, --tdm-muted và --tdm-brand-soft là các lựa chọn điều chỉnh cho Tết Đinh Mùi Blog, không phải token official từ Reddit.</p>
+        </div>
+      </section>
+      <section class="section" id="sources">
+        <div class="section-title"><div><span class="section-index">07 / PROVENANCE</span><h2>References &amp; transparency.</h2><p>Trang này là tài liệu thiết kế riêng, lấy cảm hứng từ Reddit. Không thể xác thực mức độ trùng khớp pixel 1:1 với Lingoapp vì các trang đó render động bằng JavaScript.</p></div></div>
+        <div class="paper">
+          <ol class="source-list">
+            <li><a href="https://redditbrand.lingoapp.com/s/Overview-orqY1E?v=46" target="_blank" rel="noopener noreferrer">Reddit Brand System · Overview (nguồn yêu cầu)</a></li>
+            <li><a href="https://redditbrand.lingoapp.com/s/Color-R7y72J?v=46" target="_blank" rel="noopener noreferrer">Reddit Brand System · Color (nguồn yêu cầu)</a></li>
+            <li><a href="https://redditinc.com/brand" target="_blank" rel="noopener noreferrer">Reddit Inc · Brand (xác nhận OrangeRed, Reddit Sans)</a></li>
+            <li><a href="https://redditinc.com/hubfs/Reddit%20Inc/PDF/reddit_brand_guidelines_version_2022_2022-04-01-160548_akmi.pdf" target="_blank" rel="noopener noreferrer">Reddit Brand Guidelines · 2022 PDF (màu được kiểm chứng)</a></li>
+          </ol>
+          <p class="caption">Snapshot biên soạn: 07/11/2026. Đây không phải bản sao nguyên văn, assets hay logo Reddit; số liệu là thống kê các mẫu được chọn hiển thị trên trang, không phải tổng số toàn bộ quy chuẩn gốc.</p>
+        </div>
+      </section>
+      <footer class="footer">© 2026 Tết Đinh Mùi Blog · Independent design system · <a href="https://github.com/duykhang68/tetdinhmuiblog" target="_blank" rel="noopener noreferrer">Source on GitHub</a></footer>
+    </main>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script>
+    (() => {
+      'use strict';
+      let toastTimeout;
+      const toast = document.getElementById('toast');
+      function notify(message){
+        toast.textContent=message; toast.classList.add('show');
+        clearTimeout(toastTimeout); toastTimeout=setTimeout(()=>toast.classList.remove('show'),2400);
+      }
+      async function copy(value) {
+        try { await navigator.clipboard.writeText(value); notify('Đã sao chép vào bộ nhớ tạm'); }
+        catch (_) { notify('Không thể sao chép tự động. Hãy chọn và sao chép thủ công.'); }
+      }
+      const swatches=[...document.querySelectorAll('.swatch')];
+      swatches.forEach(button => button.addEventListener('click',()=>copy(button.dataset.hex)));
+      document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click',()=>{
+        const group=button.dataset.filter;
+        document.querySelectorAll('[data-filter]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn===button)));
+        let visible=0;
+        swatches.forEach(swatch=>{const show=group==='all'||swatch.dataset.group===group;swatch.hidden=!show;if(show)visible++;});
+        document.getElementById('color-count').textContent='Đang hiển thị '+visible+' màu';
+      }));
+      document.getElementById('copy-tokens').addEventListener('click',()=>copy(document.getElementById('token-code').textContent.trim()));
+      for (const id of ['demo-cta','demo-secondary','demo-light']) {
+        document.getElementById(id).addEventListener('click',()=>notify('Bản minh họa component · không thay đổi dữ liệu'));
+      }
+      function luminance(hex){
+        const rgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(c=>c<=.04045?c/12.92:Math.pow((c+.055)/1.055,2.4));
+        return rgb[0]*.2126+rgb[1]*.7152+rgb[2]*.0722;
+      }
+      const select=document.getElementById('contrast-select');
+      function updateContrast(){
+        const color=select.value;
+        const ratio=1.05/(luminance(color)+.05);
+        document.getElementById('contrast-sample').style.background=color;
+        const result=document.getElementById('contrast-result');
+        const pass=ratio>=4.5;result.textContent=ratio.toFixed(2)+':1 · WCAG AA '+(pass?'Pass':'Fail (chữ thường)');
+        result.className=pass?'pass':'warning';
+      }
+      select.addEventListener('change',updateContrast);updateContrast();
+      const railLinks=[...document.querySelectorAll('.rail > a')];
+      if('IntersectionObserver' in window){
+        const observer=new IntersectionObserver(entries=>{
+          const visible=entries.filter(x=>x.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
+          if(!visible.length)return;
+          const active='#'+visible[0].target.id;
+          railLinks.forEach(link=>link.classList.toggle('active',link.getAttribute('href')===active));
+        },{rootMargin:'-110px 0px -65% 0px'});
+        document.querySelectorAll('main[id],main section[id]').forEach(section=>observer.observe(section));
+      }
+    })();
+  </script>
+</body>
+</html>

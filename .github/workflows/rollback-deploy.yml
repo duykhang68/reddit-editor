@@ -1,0 +1,95 @@
+name: Recovery · Rollback Target via Safe PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_sha:
+        description: Full 40-character SHA of the desired restored code tree
+        required: true
+        type: string
+      target_branch:
+        description: Branch to restore (main, deploy or gh-pages)
+        required: true
+        default: main
+        type: choice
+        options: [main, deploy, gh-pages]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rollback-${{ inputs.target_branch }}
+  cancel-in-progress: false
+
+jobs:
+  prepare-rollback-pr:
+    name: Restore historical code into reviewed PR
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      TARGET_SHA: ${{ inputs.target_sha }}
+      TARGET_BRANCH: ${{ inputs.target_branch }}
+      GH_TOKEN: ${{ secrets.ROLLBACK_WORKFLOW_TOKEN || secrets.AUTO_MERGE_WORKFLOW_TOKEN }}
+    steps:
+      - name: Validate dispatch and required credential
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = 'refs/heads/main' || { echo 'Dispatch must run from main' >&2; exit 1; }
+          [[ "$TARGET_SHA" =~ ^[0-9a-fA-F]{40}$ ]] || { echo 'target_sha must be a full SHA' >&2; exit 1; }
+          [[ "$TARGET_BRANCH" =~ ^(main|deploy|gh-pages)$ ]] || { echo 'Target branch not allowed' >&2; exit 1; }
+          test -n "$GH_TOKEN" || { echo 'Set ROLLBACK_WORKFLOW_TOKEN (Contents, Pull requests, Workflows write), or AUTO_MERGE_WORKFLOW_TOKEN; fail-closed.' >&2; exit 1; }
+      - name: Fetch complete repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate target is a historical ancestor and create restore commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin "+refs/heads/${TARGET_BRANCH}:refs/remotes/origin/${TARGET_BRANCH}"
+          git cat-file -e "${TARGET_SHA}^{commit}" || { echo 'Missing commit in repository' >&2; exit 1; }
+          git merge-base --is-ancestor "$TARGET_SHA" "origin/$TARGET_BRANCH" || { echo 'Target commit is not an ancestor of selected branch' >&2; exit 1; }
+          BRANCH_SHA=$(git rev-parse "origin/$TARGET_BRANCH")
+          test "$BRANCH_SHA" != "$TARGET_SHA" || { echo 'Target branch is already at selected commit' >&2; exit 1; }
+          RESTORE_BRANCH="rollback/${TARGET_BRANCH}/${TARGET_SHA:0:12}-${GITHUB_RUN_ID}"
+          git switch -c "$RESTORE_BRANCH" "origin/$TARGET_BRANCH"
+          # Restore repository files exactly as they were at target commit,
+          # while RETAINING the current CI/workflow files so recovery cannot
+          # weaken the checks that guard merge/deployment.
+          git restore --source="$TARGET_SHA" --staged --worktree -- .
+          git restore --source="$BRANCH_SHA" --staged --worktree -- .github/workflows
+          if git diff --cached --quiet; then
+            echo 'No application code difference after preserving workflows; nothing to restore.' >&2
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "revert(recovery): restore ${TARGET_BRANCH} code to ${TARGET_SHA:0:12}"
+          echo "RESTORE_BRANCH=$RESTORE_BRANCH" >> "$GITHUB_ENV"
+          echo "ORIGINAL_SHA=$BRANCH_SHA" >> "$GITHUB_ENV"
+      - name: Push safe restore branch and open Pull Request
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh auth setup-git
+          git push origin "HEAD:refs/heads/${RESTORE_BRANCH}"
+          gh pr create --base "$TARGET_BRANCH" --head "$RESTORE_BRANCH" \
+            --title "Rollback ${TARGET_BRANCH} to ${TARGET_SHA:0:12}" \
+            --body "Automated, explicitly confirmed rollback request.\n\n- Historical target SHA: \`$TARGET_SHA\`\n- Original branch HEAD: \`$ORIGINAL_SHA\`\n- Selected branch: \`$TARGET_BRANCH\`\n- Current GitHub workflows preserved intentionally.\n\n**Not deployed yet.** Await CI Quality Gate, branch policy, merge and actual host deployment."
+      - name: Write operation summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo '## Rollback dispatch'
+            echo "- Repository: $GITHUB_REPOSITORY"
+            echo "- Requested target: $TARGET_SHA"
+            echo "- Branch: $TARGET_BRANCH"
+            echo '- Mode: Restore application tree through PR; no force-push.'
+            echo '- A GitHub Actions dispatch or PR is not proof of a successful deployment.'
+          } >> "$GITHUB_STEP_SUMMARY"

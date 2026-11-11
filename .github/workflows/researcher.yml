@@ -1,0 +1,100 @@
+name: Researcher · CI and Conflict Knowledge
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - researcher.py
+      - tests/test_researcher.py
+      - .github/workflows/researcher.yml
+  workflow_run:
+    workflows: ["CI · Quality Gate"]
+    types: [completed]
+  schedule:
+    - cron: '37 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: researcher-${{ github.event.workflow_run.id || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  tests:
+    name: Researcher regression tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p test_researcher.py -v
+
+  collect:
+    name: Diagnose incidents, update GitHub knowledge
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      actions: write
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Read only researcher code from trusted main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Regression check before privileged researcher work
+        run: python -m unittest discover -s tests -p test_researcher.py -v
+
+      - name: Evaluate every event without skipping the job
+        env:
+          # GitHub's job-scoped token has the explicit issues:write permission.
+          # The optional PAT is restricted to creating knowledge PRs, which
+          # must trigger their own CI via a non-GITHUB_TOKEN identity.
+          GITHUB_TOKEN: ${{ github.token }}
+          RESEARCHER_PR_TOKEN: ${{ secrets.AUTO_MERGE_WORKFLOW_TOKEN }}
+        shell: bash
+        run: |
+          case "${{ github.event_name }}" in
+            workflow_run)
+              python researcher.py --mode ci
+              ;;
+            schedule|workflow_dispatch)
+              python researcher.py --mode conflicts
+              ;;
+            pull_request)
+              echo 'Researcher tests completed. PR event is validation-only; no privileged repository writes.'
+              ;;
+            *)
+              echo 'ERROR: Unsupported researcher event' >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Report researcher execution summary
+        if: always()
+        run: |
+          {
+            echo '## Researcher · incident collection'
+            echo ''
+            echo '- Run type: ${{ github.event_name }}'
+            echo '- Checked in trusted main checkout; no PR code executed with write token.'
+            echo '- Duplicates are collected in GitHub Issues; new signatures propose a documentation-only PR.'
+            echo '- Only confirmed runner startup failures can be rerun (maximum four retries).'
+            echo '- True semantic conflicts are recorded, not force merged.'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,57 @@
+.gaq{--gaq-orange:#ff4500;--gaq-ink:#24313a;--gaq-muted:#77838a;color:var(--gaq-ink);font-family:inherit}
+.gaq *{box-sizing:border-box}
+.gaq-head{padding:15px 14px 12px;display:flex;gap:10px;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #edf0f2}
+.gaq-eyebrow{font-size:9px;letter-spacing:1.05px;font-weight:850;color:#e44714}
+.gaq-head h2{display:flex;align-items:center;gap:8px;font-size:19px!important;font-weight:850;margin:5px 0 2px;letter-spacing:-.5px}
+.gaq-head p{font-size:10px;color:var(--gaq-muted);margin:2px 0 0;line-height:1.4}
+.gaq-led{width:8px;height:8px;display:inline-block;border-radius:50%;background:#b4bbc0;flex:none}
+.gaq-led.is-live{background:#259b71;box-shadow:0 0 0 3px #def4e9}
+.gaq-refresh{border:1px solid #e4e8eb;border-radius:9px;background:#f9fafb;color:#53636b;cursor:pointer;font-size:19px;line-height:1;width:31px;height:31px;flex:none}
+.gaq-refresh:hover:not(:disabled){background:#fff2eb;color:#df450e;border-color:#ffd7c5}
+.gaq-refresh:disabled{opacity:.5;cursor:wait}
+.gaq-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:12px 12px 9px}
+.gaq-stats>div{background:#f7f9fa;border:1px solid #f0f2f3;border-radius:10px;min-width:0;padding:9px 6px 8px;text-align:center}
+.gaq-stats strong{display:block;font-size:20px;line-height:1.1;font-weight:850;font-variant-numeric:tabular-nums}
+.gaq-number-waiting{color:#ad751b}
+.gaq-number-running{color:#13865c}
+.gaq-stats span{font-size:9px;color:#76848e;white-space:nowrap;display:block;margin-top:5px}
+.gaq-content{padding:3px 12px 10px}
+.gaq-section-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:6px 1px 7px}
+.gaq-section-heading strong{font-size:10px;font-weight:800;letter-spacing:.15px}
+.gaq-section-heading>span{font-size:9px;color:#96a0a7}
+.gaq-list{display:grid;gap:5px}
+.gaq-item{display:flex;gap:8px;align-items:flex-start;min-width:0;padding:9px 7px;border:1px solid #edf0f2;background:#fff;border-radius:10px;color:inherit;text-decoration:none;transition:border-color .15s,background-color .15s}
+.gaq-item:hover,.gaq-item:focus-visible{border-color:#ffd4c2;background:#fffaf7}
+.gaq-status{width:17px;height:17px;display:grid;place-items:center;flex:none;margin-top:1px;color:#cc8b23}
+.gaq-clock{width:16px;height:16px}
+.gaq-status-dot{display:block;width:8px;height:8px;border-radius:50%;background:#a5afb6}
+.gaq-status.is-running .gaq-status-dot{background:#18a46c;animation:gaq-pulse 1.35s ease-in-out infinite}
+.gaq-status.is-success .gaq-status-dot{background:#19a36b}
+.gaq-status.is-failure .gaq-status-dot,.gaq-status.is-timed_out .gaq-status-dot,.gaq-status.is-action_required .gaq-status-dot{background:#e25650}
+.gaq-status.is-skipped .gaq-status-dot,.gaq-status.is-cancelled .gaq-status-dot{background:#a9b1b7}
+.gaq-item-content{min-width:0;flex:1;display:block}
+.gaq-item-title{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;font-size:11px;font-weight:750;line-height:1.35;overflow-wrap:anywhere}
+.gaq-item-message{display:block;margin-top:3px;font-size:10px;color:#738088;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gaq-item-meta{display:flex;align-items:center;flex-wrap:wrap;gap:4px;color:#9aa4aa;font-size:9px;margin-top:5px;font-variant-numeric:tabular-nums}
+.gaq-state{font-weight:800;color:#7d878d}
+.gaq-state.is-running{color:#16865e}
+.gaq-branch{display:block;color:#929ea5;font-size:9px;margin-top:4px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.gaq-item-arrow{flex:none;font-size:11px;color:#b8c0c5}
+.gaq-empty{padding:14px 10px;border:1px dashed #e5e9ec;border-radius:10px;background:#fafbfc;color:#7a8790;font-size:10px;line-height:1.6}
+.gaq-more{display:block;text-align:center;margin:8px 2px 1px;text-decoration:none;color:#dd4c18;font-size:10px;font-weight:750}
+.gaq-recent{margin-top:12px;padding-top:8px;border-top:1px solid #f0f2f3}
+.gaq-recent .gaq-item{padding-block:7px}
+.gaq-foot{border-top:1px solid #edf0f2;display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;padding:10px 12px;font-size:9px;color:#839099}
+.gaq-foot a{color:#db4a17;text-decoration:none;font-weight:800}
+.gaq-disclaimer{border-top:1px solid #edf0f2;margin:0;padding:0 12px 10px;font-size:9px;line-height:1.5;color:#97a1a8}
+.gaq-error{padding:10px 12px;margin:0;background:#fff7ec;border-top:1px solid #ffe0be;color:#995509;font-size:10px;line-height:1.5;overflow-wrap:anywhere}
+@keyframes gaq-pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(24,164,108,.35)}50%{opacity:.55;box-shadow:0 0 0 4px rgba(24,164,108,0)}}
+@media(max-width:1180px) and (min-width:621px){.gaq{align-self:start}}
+@media(max-width:620px){.gaq-head{padding:14px 15px}.gaq-content{padding-inline:14px}.gaq-stats{padding-inline:14px}.gaq-stats strong{font-size:21px}.gaq-item-title{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.gaq-status.is-running .gaq-status-dot{animation:none}.gaq-item{transition:none}}
+
+/* Queue and Smart Insights share the same bottom dashboard row.
+   Keep the editor's publication sidebar completely separate. */
+.kit-github-dashboard{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:18px;align-items:start;width:min(100%,1120px);max-width:100%;margin:18px auto 30px}
+.kit-github-dashboard>.gaq,.kit-github-dashboard>.ghsi{width:100%;max-width:none;margin:0;min-width:0}
+@media(max-width:900px){.kit-github-dashboard{grid-template-columns:minmax(0,1fr);gap:14px}}

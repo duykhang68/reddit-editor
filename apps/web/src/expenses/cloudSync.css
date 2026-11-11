@@ -1,0 +1,77 @@
+/* Google Drive sync controls reuse the existing Reddit OrangeRed light design. */
+.ex-cloud-note{min-height:35px}
+.ex-cloud-note.ex-cloud-synced,.ex-cloud-note.ex-cloud-ready{background:#e9f6ed;color:#0a7446}
+.ex-cloud-note.ex-cloud-pending,.ex-cloud-note.ex-cloud-conflict{background:#fff1de;color:#995f12}
+.ex-cloud-note.ex-cloud-disconnected,.ex-cloud-note.ex-cloud-connecting,
+.ex-cloud-note.ex-cloud-error{background:#fff0e8;color:#bb4215}
+.ex-cloud-note.ex-cloud-syncing,.ex-cloud-note.ex-cloud-checking{background:#f1f2f4;color:#56616a}
+.ex-cloud-note.ex-cloud-pending .ex-live-dot,.ex-cloud-note.ex-cloud-conflict .ex-live-dot{background:#d79a33;box-shadow:0 0 0 4px #fbe4b8}
+.ex-cloud-note.ex-cloud-disconnected .ex-live-dot,
+.ex-cloud-note.ex-cloud-connecting .ex-live-dot,
+.ex-cloud-note.ex-cloud-error .ex-live-dot{background:#ff4500;box-shadow:0 0 0 4px #ffe0d2}
+.ex-cloud-note.ex-cloud-syncing .ex-live-dot,
+.ex-cloud-note.ex-cloud-checking .ex-live-dot{background:#77838b;box-shadow:0 0 0 4px #e1e5e9}
+.ex-sync-button:disabled{opacity:.6}
+.ex-cloud-summary{
+  margin:-12px 0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:7px 18px;
+  color:#67747d;
+  font-size:11px;
+  line-height:1.5;
+  padding:0 3px;
+}
+.ex-cloud-summary a{color:#ce3900;font-weight:800}
+.ex-cloud-conflict{
+  background:#fffbf7;
+  border:1px solid #f3d4b5;
+  padding:17px 21px;
+  margin:0 0 18px;
+}
+.ex-cloud-conflict-heading{display:flex;align-items:flex-start;gap:12px;color:#9b620f}
+.ex-cloud-conflict-heading>svg{flex:0 0 auto;margin-top:2px}
+.ex-cloud-conflict-heading strong{font-size:13px;color:#824d0b}
+.ex-cloud-conflict-heading p{font-size:11px;color:#786c5b;line-height:1.6;margin:6px 0 0}
+.ex-cloud-conflict-actions{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0 0 32px}
+@media(max-width:700px){
+  .ex-cloud-summary{margin:-5px 0 16px;flex-direction:column;align-items:flex-start}
+  .ex-cloud-conflict-actions{margin-left:0}
+  .ex-cloud-conflict-actions .ex-btn{width:100%;white-space:normal}
+}
+
+.ex-drive-connect{background:#fff0e8;border-color:#ffc4ac;color:#ba3705;font-weight:850}
+.ex-drive-connect:hover{background:#ffe7d9;color:#a72e04}
+
+
+/* Public OAuth Client ID is auto-resolved; this is a recovery control only. */
+.ex-config-toggle{
+  background:transparent;border:0;cursor:pointer;color:#cf3905;
+  padding:2px 0;font:inherit;font-size:11px;font-weight:800;
+  text-decoration:underline;text-underline-offset:3px;
+}
+.ex-config-toggle:hover{color:#a32a00}
+.ex-drive-config-panel{
+  max-width:620px;background:#fffaf7;border:1px solid #f5d9cb;
+  border-radius:13px;padding:16px 19px;margin:-8px 0 18px;
+  box-shadow:0 6px 20px rgba(255,69,0,.04);
+}
+.ex-drive-config-panel label{
+  font-size:12px;color:#3c3d42;font-weight:850;display:block;margin-bottom:8px
+}
+.ex-drive-config-panel input{
+  width:100%;min-height:43px;background:#fff;border:1px solid #e2e3e6;
+  border-radius:10px;padding:10px 12px;color:#19191c;font:inherit;
+  font-size:12px;letter-spacing:.01em
+}
+.ex-drive-config-panel input:focus{
+  outline:2px solid #ff9b73;outline-offset:1px;border-color:#ff6c35
+}
+.ex-drive-config-panel p{
+  margin:9px 0 0;font-size:11px;line-height:1.65;color:#68737d
+}
+@media(max-width:700px){
+  .ex-drive-config-panel{max-width:100%;padding:14px 13px}
+}

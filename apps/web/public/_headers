@@ -1,0 +1,4 @@
+# Cache only the Blogger override assets briefly so new GitHub deployments become visible.
+/blogger-assets/*
+  Cache-Control: public, max-age=60, must-revalidate
+  X-Content-Type-Options: nosniff

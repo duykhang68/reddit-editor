@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f6f8f9"><meta name="description" content="Từ điển Việt Hàn Anh, kiến thức và flashcard đồng bộ Google Sheets.">
+<title>Vietnamese · Korean · English Vocabulary Insights</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17242e;background:#f6f8f9;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}a{color:inherit}main{max-width:1300px;margin:auto;padding:30px 24px 80px}.eyebrow{text-transform:uppercase;color:#05784a;font-size:12px;font-weight:800;letter-spacing:.13em}.top{display:flex;justify-content:space-between;gap:20px;align-items:start;margin-bottom:25px}.brand{display:flex;align-items:center;gap:15px}.mark{width:60px;height:60px;border-radius:18px;background:#dcf6e9;display:grid;place-items:center;color:#067b4a;font-size:27px;font-weight:900}h1{font-size:clamp(28px,3.4vw,43px);letter-spacing:-.045em;line-height:1.12;margin:8px 0}h1 span{color:#068954}.sub{color:#657580;line-height:1.6;margin:5px 0 0}.top-actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:1px solid #d7e0e4;background:#fff;padding:11px 17px;border-radius:12px;font-weight:750;color:#263640;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;min-height:42px}.btn:hover{border-color:#087f54}.primary{background:#087c50;color:white;border-color:#087c50}.primary:hover{background:#05683f;color:white}.panel{background:#fff;border:1px solid #dfe7ea;border-radius:21px;padding:25px;margin:18px 0;box-shadow:0 5px 22px #102a3e06}.section-head{display:flex;align-items:start;justify-content:space-between;gap:15px;margin-bottom:19px}.kicker{display:block;color:#068c56;font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}.section-head h2{font-size:23px;letter-spacing:-.025em;margin:0}.muted{color:#687986;font-size:14px;line-height:1.6}.source-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}.source-box{background:#f5faf7;border:1px solid #dcece2;border-radius:14px;padding:15px 17px;flex:1 1 280px;min-width:0}.source-box strong{display:block;margin:3px 0 4px}.source-box a{color:#047447;text-decoration:none}.source-box small{color:#72818a;overflow-wrap:anywhere}.status{display:inline-flex;align-items:center;gap:7px;font-weight:750;font-size:13px;background:#eff9f3;color:#0a8150;padding:8px 11px;border-radius:999px}.dot{width:8px;height:8px;background:currentColor;border-radius:50%}.status.error{background:#fff0ed;color:#bc3e22}.status.loading{background:#fff7e7;color:#925d0a}.sync-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:15px}.inputs{display:grid;grid-template-columns:minmax(180px,2fr) minmax(170px,1fr) 160px;gap:12px;margin-bottom:16px}.field{display:flex;flex-direction:column;gap:7px;color:#51636d;font-size:12px;font-weight:800}.field input,.field select{width:100%;border:1px solid #d7e0e4;background:white;border-radius:11px;padding:12px;color:#223640;outline:none}.field input:focus,.field select:focus{border-color:#078651;box-shadow:0 0 0 3px #dcf6e9}.tablebox{overflow-x:auto;border:1px solid #e0e8e9;border-radius:14px}table{border-collapse:collapse;min-width:760px;width:100%;text-align:left}th{background:#f5f8f8;color:#596a73;text-transform:uppercase;letter-spacing:.065em;font-size:11px;padding:13px 16px}td{border-top:1px solid #edf0f1;padding:14px 16px;vertical-align:top;font-size:14px}td strong{font-size:15px}td small{display:block;color:#657582;margin-top:3px}.category{color:#067a4b;font-size:12px;background:#e9f8ef;padding:5px 8px;border-radius:7px;display:inline-block;max-width:240px}.rowbutton{border:0;background:transparent;color:#087e53;font-weight:800;padding:4px 0}.details{background:#f8fbfa;border-top:1px solid #e6eeea;padding:16px 20px;line-height:1.65;white-space:pre-wrap;font-size:14px}.detailgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.detailgrid strong{display:block;color:#1f313a;margin-bottom:8px}.pager{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:15px}.pager-actions{display:flex;gap:8px;align-items:center}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.metric{background:#f7faf8;border:1px solid #e2eae6;border-radius:15px;padding:19px}.metric small{display:block;color:#637581;font-weight:650}.metric b{display:block;font-size:32px;letter-spacing:-.055em;margin:5px 0;color:#05784c}.insights-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:17px;margin-top:17px}.inner{border:1px solid #e3e9e8;border-radius:15px;padding:19px}.inner h3{margin:0 0 16px;font-size:17px}.barline{display:grid;grid-template-columns:minmax(125px,1fr) minmax(70px,2fr) 55px;gap:12px;align-items:center;margin:11px 0;font-size:12px}.barlabel{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.track{height:10px;background:#edf3f0;border-radius:10px;overflow:hidden}.fill{height:100%;background:#12865c;border-radius:10px}.fill.alt{background:#f26333}.card-stage{max-width:850px;margin:18px auto 0}.flash-controls{display:flex;align-items:end;justify-content:space-between;gap:13px;flex-wrap:wrap}.flash-controls .field{min-width:180px}.flashcard{background:linear-gradient(145deg,#eef9f2,#f9fdfb 70%);border:1px solid #cfe8d8;min-height:245px;border-radius:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:14px;padding:26px;cursor:pointer;margin:15px 0;box-shadow:0 12px 30px #0c7a4b0a}.flashcard:focus-visible{outline:3px solid #0b8756}.flashcard .lang{font-size:12px;letter-spacing:.1em;font-weight:800;color:#16865f;text-transform:uppercase}.flashcard .word{font-size:clamp(28px,4vw,46px);font-weight:850;letter-spacing:-.035em;overflow-wrap:anywhere}.flashcard .hint{color:#687f76;font-size:13px}.flash-actions{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap}.lesson{margin-top:20px;background:#f7faf8;border:1px solid #e0e9e2;border-radius:15px;padding:18px}.lesson h3{margin:0 0 8px;font-size:15px}.lesson p{line-height:1.65;white-space:pre-wrap;font-size:14px;margin:0}.lesson + .lesson{margin-top:10px}.empty{text-align:center;color:#76858e;padding:35px 15px}.foot{text-align:center;color:#829098;font-size:12px;margin-top:35px}@media(max-width:800px){main{padding:20px 13px 60px}.top{display:block}.top-actions{margin-top:18px}.panel{padding:17px}.inputs{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}.insights-grid,.detailgrid{grid-template-columns:1fr}.section-head h2{font-size:20px}}@media(max-width:460px){.metrics{gap:8px}.metric{padding:12px}.metric b{font-size:25px}}
+</style></head><body>
+<main>
+<header class="top"><div class="brand"><div class="mark">文</div><div><span class="eyebrow">Duy Nguyen · Learning Workspace</span><h1>Vocabulary <span>Insights.</span></h1><p class="sub">Từ điển Việt — Hàn — Anh, tra cứu thông minh và ôn tập bằng flashcard.</p></div></div><nav class="top-actions"><a class="btn" href="/">← Editor</a><a class="btn" href="https://docs.google.com/spreadsheets/d/19nL6wtouHV-0OumsQR2jF-5xWA1cpbpivRUIsm7hDgk/edit?gid=0" target="_blank" rel="noopener noreferrer">↗ Google Sheets</a></nav></header>
+<section class="panel" aria-labelledby="sync-title"><div class="section-head"><div><span class="kicker">Section 01 · Data connection</span><h2 id="sync-title">Đồng bộ từ vựng</h2><p class="muted">Google Drive → Google Sheets → Vocabulary Insights. Giữ nguyên số dòng kể cả khi hàng bị ẩn trong Sheets.</p></div><span class="status loading" id="status"><span class="dot"></span><span id="status-text">Đang kết nối…</span></span></div>
+<div class="source-row"><div class="source-box"><small>GOOGLE DRIVE · SOURCE FOLDER</small><strong>viethananh</strong><a target="_blank" rel="noopener noreferrer" href="https://drive.google.com/drive/u/0/folders/1coylrqzqPOLZP_lhUdWlb3nI47Qr-af7">Mở thư mục nguồn ↗</a></div><div class="source-box"><small>GOOGLE SHEETS · SOURCE OF TRUTH</small><strong>viethananh / Sheet1</strong><small>6 cột · Việt, Hàn, Anh, Context, Grammar, Category</small></div></div>
+<div class="sync-actions"><a class="btn primary" id="google-login" href="/auth/google/start?return_to=vocabulary-insights" hidden>↗ Đăng nhập với Google</a><button type="button" class="btn primary" id="sync">↻ Đồng bộ ngay</button><span class="muted" id="synced">Chưa đồng bộ · tự kiểm tra mỗi 3 phút khi trang mở</span></div><p class="muted" id="sync-error" role="alert"></p>
+</section>
+<section class="panel" aria-labelledby="kb-title"><div class="section-head"><div><span class="kicker">Section 02 · Knowledge Base</span><h2 id="kb-title">Tra cứu từ điển</h2><p class="muted">Mặc định hiển thị 3 dòng. Mở rộng từng mục để xem ngữ cảnh và ngữ pháp.</p></div><span class="status" id="results-count">0 từ</span></div>
+<div class="inputs"><label class="field">Tìm kiếm mọi ngôn ngữ<input id="search" type="search" placeholder="Tìm tiếng Việt, 한국어, English…" autocomplete="off"></label><label class="field">Danh mục<select id="category"><option value="">Tất cả danh mục</option></select></label><label class="field">Số dòng / trang<select id="pagesize"><option value="3">3 dòng (mặc định)</option><option value="10">10 dòng</option><option value="25">25 dòng</option><option value="50">50 dòng</option></select></label></div>
+<div class="tablebox"><table><thead><tr><th>Tiếng Việt</th><th>한국어 · Hàn</th><th>English · Anh</th><th>Danh mục</th><th>Chi tiết</th></tr></thead><tbody id="words"><tr><td colspan="5" class="empty">Đang tải dữ liệu từ Google Sheets…</td></tr></tbody></table></div>
+<div class="pager"><span class="muted" id="pageinfo">Trang 0 / 0</span><div class="pager-actions"><button class="btn" id="previous">← Trước</button><button class="btn" id="next">Tiếp →</button></div></div></section>
+<section class="panel" aria-labelledby="insights-title"><div class="section-head"><div><span class="kicker">Section 03 · Smart Insights</span><h2 id="insights-title">Tổng quan kho từ vựng</h2><p class="muted">Số liệu tính từ toàn bộ nguồn, không phụ thuộc bộ lọc tra cứu.</p></div></div>
+<div class="metrics"><div class="metric"><small>Tổng từ vựng</small><b id="k-total">—</b><small>Đầy đủ và đang lưu trên Sheet</small></div><div class="metric"><small>Danh mục</small><b id="k-cats">—</b><small>Chủ đề học tập</small></div><div class="metric"><small>Có ngữ cảnh</small><b id="k-context">—</b><small>Context / Expression</small></div><div class="metric"><small>Có ngữ pháp</small><b id="k-grammar">—</b><small>Ví dụ minh họa</small></div></div>
+<div class="insights-grid"><div class="inner"><h3>Phân bổ từ vựng theo chủ đề</h3><div id="chart"><p class="muted">Chưa có dữ liệu</p></div></div><div class="inner"><h3>Độ đầy đủ dữ liệu</h3><div id="completeness"><p class="muted">Chưa có dữ liệu</p></div></div></div></section>
+<section class="panel" aria-labelledby="flash-title"><div class="section-head"><div><span class="kicker">Section 04 · Active Learning</span><h2 id="flash-title">Flashcards · Ôn tập 3 ngôn ngữ</h2><p class="muted">Lật thẻ để kiểm tra đáp án, sau đó xem Context / Expression và Grammar từ chính Google Sheets.</p></div></div>
+<div class="card-stage"><div class="flash-controls"><label class="field">Ngôn ngữ mặt trước<select id="frontlang"><option value="vi">Tiếng Việt → Hàn + Anh</option><option value="ko">한국어 → Việt + Anh</option><option value="en">English → Việt + Hàn</option></select></label><label class="field">Bộ thẻ<select id="deck"><option value="">Toàn bộ từ vựng</option></select></label><span class="muted" id="flash-index">0 / 0</span></div>
+<div id="flashcard" class="flashcard" role="button" tabindex="0" aria-label="Lật thẻ từ vựng"><div class="lang" id="flash-lang">VIETNAMESE</div><div class="word" id="flash-word">Chưa có từ vựng</div><div class="hint" id="flash-hint">Chạm để lật thẻ</div></div>
+<div class="flash-actions"><button class="btn" id="flash-prev">← Trước</button><button class="btn primary" id="flip">Lật thẻ ↻</button><button class="btn" id="shuffle">⇄ Trộn thẻ</button><button class="btn" id="flash-next">Tiếp →</button></div>
+<div class="lesson"><h3>Context / Expression</h3><p id="flash-context">Chọn một flashcard để bắt đầu.</p></div><div class="lesson"><h3>Ngữ pháp & ví dụ</h3><p id="flash-grammar">Nội dung lấy trực tiếp từ cột Ngữ pháp ví dụ trong Google Sheets.</p></div></div></section>
+<p class="foot">Duy Nguyen · Reddit-inspired light UI · Source: Google Drive / Google Sheets · Không lưu service-account key trên trình duyệt</p>
+</main><script>
+'use strict';
+const $=id=>document.getElementById(id), state={records:[],filtered:[],page:1,flash:0,turned:false,deck:[]},fmt=n=>Number(n).toLocaleString('vi-VN');
+const label={vi:'VIETNAMESE',ko:'한국어 · KOREAN',en:'ENGLISH'};
+const clear=el=>el.replaceChildren();
+function node(tag,txt,cls){const n=document.createElement(tag);if(txt!==undefined)n.textContent=txt;if(cls)n.className=cls;return n;}
+function setStatus(text,kind=''){ $('status').className='status '+kind;$('status-text').textContent=text;}
+function err(text){$('sync-error').textContent=text||'';}
+function showLogin(needed){$('google-login').hidden=!needed; $('sync').hidden=needed;}
+function option(select,value,text){const opt=document.createElement('option');opt.value=value;opt.textContent=text;select.append(opt);}
+function setData(records){
+ state.records=records;state.page=1;state.flash=0;state.turned=false;
+ for(const name of ['category','deck']){const select=$(name);while(select.options.length>1)select.remove(1);}
+ const groups=[...new Set(records.map(x=>x.category))].sort((a,b)=>a.localeCompare(b,'vi'));
+ for(const group of groups){option($('category'),group,group);option($('deck'),group,group);}
+ renderSearch();renderInsights();resetDeck();
+}
+function renderSearch(){
+ const search=$('search').value.trim().toLocaleLowerCase();
+ const cat=$('category').value;
+ state.filtered=state.records.filter(x=>(!cat||x.category===cat)&&(!search||[x.vi,x.ko,x.en,x.category,x.context,x.grammar].some(v=>v.toLocaleLowerCase().includes(search))));
+ const size=Number($('pagesize').value)||3, pages=Math.max(1,Math.ceil(state.filtered.length/size));
+ state.page=Math.max(1,Math.min(state.page,pages));
+ const from=(state.page-1)*size, items=state.filtered.slice(from,from+size),body=$('words');clear(body);
+ for(const item of items){
+  const tr=node('tr');
+  for(const key of ['vi','ko','en']){const cell=node('td');cell.append(node('strong',item[key]||'—'));tr.append(cell);}
+  const c=node('td');c.append(node('span',item.category,'category'));tr.append(c);
+  const td=node('td'),expand=node('button','Xem thêm','rowbutton');expand.type='button';expand.setAttribute('aria-expanded','false');td.append(expand);tr.append(td);body.append(tr);
+  const extra=node('tr'),wide=node('td');wide.colSpan=5;const detail=node('div',undefined,'details'),grid=node('div',undefined,'detailgrid');
+  for(const [title,content] of [['Context / Expression',item.context],['Ngữ pháp ví dụ',item.grammar]]){const panel=node('div');panel.append(node('strong',title),node('div',content||'Chưa có dữ liệu'));grid.append(panel);}
+  detail.append(grid);wide.append(detail);extra.append(wide);extra.hidden=true;body.append(extra);
+  expand.addEventListener('click',()=>{extra.hidden=!extra.hidden;expand.textContent=extra.hidden?'Xem thêm':'Thu gọn';expand.setAttribute('aria-expanded',String(!extra.hidden));});
+ }
+ if(!items.length){const row=node('tr'),cell=node('td','Không tìm thấy từ vựng phù hợp.','empty');cell.colSpan=5;row.append(cell);body.append(row);}
+ $('results-count').textContent=fmt(state.filtered.length)+' từ';
+ $('pageinfo').textContent=(state.filtered.length?fmt(from+1)+'–'+fmt(Math.min(from+size,state.filtered.length))+' / '+fmt(state.filtered.length)+' · ':'')+'Trang '+state.page+' / '+pages;
+ $('previous').disabled=state.page<=1;$('next').disabled=state.page>=pages;
+}
+function bar(parent,title,num,max,alt=false){const row=node('div',undefined,'barline'),name=node('span',title,'barlabel'),track=node('div',undefined,'track'),fill=node('div',undefined,'fill'+(alt?' alt':''));fill.style.width=(max?Math.max(0,num/max*100):0)+'%';track.append(fill);row.append(name,track,node('strong',fmt(num)));parent.append(row);}
+function renderInsights(){
+ const list=state.records,groups=new Map();
+ for(const item of list)groups.set(item.category,(groups.get(item.category)||0)+1);
+ $('k-total').textContent=fmt(list.length);$('k-cats').textContent=fmt(groups.size);
+ const context=list.filter(x=>x.context).length,grammar=list.filter(x=>x.grammar).length;
+ $('k-context').textContent=fmt(context);$('k-grammar').textContent=fmt(grammar);
+ const chart=$('chart'), completeness=$('completeness');clear(chart);clear(completeness);
+ const top=[...groups.entries()].sort((a,b)=>b[1]-a[1]).slice(0,10);
+ for(const [category,count] of top)bar(chart,category,count,top[0]?.[1]||1);
+ for(const [name,count] of [['Tiếng Việt',list.filter(x=>x.vi).length],['한국어',list.filter(x=>x.ko).length],['English',list.filter(x=>x.en).length],['Context',context],['Grammar',grammar]])bar(completeness,name,count,list.length,true);
+ if(!list.length){chart.append(node('p','Chưa có dữ liệu','muted'));completeness.append(node('p','Chưa có dữ liệu','muted'));}
+}
+function resetDeck(){const cat=$('deck').value;state.deck=state.records.filter(x=>!cat||x.category===cat);state.flash=0;state.turned=false;renderFlash();}
+function renderFlash(){
+ const item=state.deck[state.flash],lang=$('frontlang').value;
+ $('flash-lang').textContent=state.turned?'ANSWER · ĐÁP ÁN':label[lang];
+ $('flash-word').textContent=!item?'Chưa có từ vựng':state.turned?(['vi','ko','en'].filter(k=>k!==lang).map(k=>item[k]||'—').join(' / ')):(item[lang]||'—');
+ $('flash-hint').textContent=state.turned?'Chạm để xem câu hỏi':'Chạm để lật thẻ';
+ $('flash-index').textContent=(item?state.flash+1:0)+' / '+state.deck.length;
+ $('flash-context').textContent=item?.context||'Chưa có Context / Expression.';
+ $('flash-grammar').textContent=item?.grammar||'Chưa có ngữ pháp ví dụ.';
+ for(const id of ['flash-prev','flash-next','flip','shuffle'])$(id).disabled=!item;
+}
+function move(n){if(!state.deck.length)return;state.flash=(state.flash+n+state.deck.length)%state.deck.length;state.turned=false;renderFlash();}
+function flip(){if(!state.deck.length)return;state.turned=!state.turned;renderFlash();}
+async function sync(force=false){
+ $('sync').disabled=true;setStatus('Đang đồng bộ…','loading');err('');
+ try{
+  const res=await fetch('/api/vocabulary-sheet'+(force?'?refresh=1':''),{credentials:'same-origin',cache:'no-store'});
+  const data=await res.json().catch(()=>({}));
+  if(res.status===401){setStatus('Cần đăng nhập','error');showLogin(true);err('Nhấn Đăng nhập với Google để tiếp tục. Sau khi đăng nhập, bạn sẽ quay lại trang từ vựng.');return;}
+  if(!res.ok)throw Error(data.error||data.message||'Google Sheets API HTTP '+res.status);
+  if(!Array.isArray(data.records))throw Error('Dữ liệu trả về không hợp lệ.');
+  setData(data.records);
+  showLogin(false);
+  setStatus('Đã đồng bộ','');
+  $('synced').textContent=fmt(data.total)+' từ · Lần đồng bộ: '+new Date(data.syncedAt).toLocaleString('vi-VN')+' · Tự kiểm tra 3 phút/lần';
+ }catch(e){setStatus('Đồng bộ thất bại','error');err(e.message||'Không thể kết nối Google Sheets.');}
+ finally{$('sync').disabled=false;}
+}
+$('sync').addEventListener('click',()=>sync(true));
+$('search').addEventListener('input',()=>{state.page=1;renderSearch();});
+$('category').addEventListener('change',()=>{state.page=1;renderSearch();});
+$('pagesize').addEventListener('change',()=>{state.page=1;renderSearch();});
+$('previous').addEventListener('click',()=>{state.page--;renderSearch();});
+$('next').addEventListener('click',()=>{state.page++;renderSearch();});
+$('deck').addEventListener('change',resetDeck);
+$('frontlang').addEventListener('change',()=>{state.turned=false;renderFlash();});
+$('flash-prev').addEventListener('click',()=>move(-1));
+$('flash-next').addEventListener('click',()=>move(1));
+$('flip').addEventListener('click',flip);
+$('flashcard').addEventListener('click',flip);
+$('flashcard').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip();}});
+$('shuffle').addEventListener('click',()=>{for(let i=state.deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[state.deck[i],state.deck[j]]=[state.deck[j],state.deck[i]];}state.flash=0;state.turned=false;renderFlash();});
+sync();setInterval(()=>{if(document.visibilityState==='visible'&&navigator.onLine)sync(false);},180000);
+</script></body></html>

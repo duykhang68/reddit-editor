@@ -1,0 +1,82 @@
+name: CD · Versioned Release (No Live Deployment)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version, e.g. v1.0.0 (must not already exist)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Validate and create immutable release
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - name: Validate version format
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          if ! [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "Version must be vMAJOR.MINOR.PATCH (optional prerelease)." >&2
+            exit 1
+          fi
+
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Verify workflow was dispatched from main
+        env:
+          REF: ${{ github.ref }}
+        run: test "$REF" = 'refs/heads/main'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+
+      - name: Package reviewed release files
+        run: |
+          tar -czf editor-web.tar.gz -C apps/web/dist .
+          sha256sum editor-web.tar.gz > editor-web.tar.gz.sha256
+
+      - name: Verify packaged release checksum and frontend integrity
+        run: |
+          sha256sum --check editor-web.tar.gz.sha256
+          mkdir -p /tmp/verified-editor-web
+          tar -xzf editor-web.tar.gz -C /tmp/verified-editor-web
+          test -s /tmp/verified-editor-web/index.html
+          if grep -q 'localhost:5173' /tmp/verified-editor-web/index.html; then
+            echo 'Release HTML unexpectedly references local dev server' >&2
+            exit 1
+          fi
+
+      - name: Publish tagged GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release create "$VERSION" editor-web.tar.gz editor-web.tar.gz.sha256 \
+            --target "$GITHUB_SHA" \
+            --title "$VERSION" \
+            --generate-notes
+
+# IMPORTANT: This workflow packages the Vite frontend. It does not deploy
+# the Node.js backend or expose the application to the internet.

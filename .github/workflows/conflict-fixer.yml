@@ -1,0 +1,54 @@
+name: Conflict Fixer · Safe Branch Refresh
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: safe-pr-conflict-check
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Refresh clean branches; report true conflicts
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            const prs = await github.paginate(github.rest.pulls.list, {
+              owner, repo, state: 'open', base: 'main', per_page: 100
+            });
+            for (const pr of prs.slice(0, 30)) {
+              if (pr.draft || pr.head.repo?.full_name !== context.repo.owner + '/' + context.repo.repo) continue;
+              const {data: fresh} = await github.rest.pulls.get({owner, repo, pull_number: pr.number});
+              if (fresh.mergeable === false || fresh.mergeable_state === 'dirty') {
+                core.warning('PR #' + pr.number + ' has real content conflicts; not auto-resolving.');
+                const existing = await github.paginate(github.rest.issues.listComments, {
+                  owner, repo, issue_number: pr.number, per_page: 100
+                });
+                const marker = '<!-- conflict-fixer:' + fresh.head.sha + ' -->';
+                if (!existing.some(comment => (comment.body || '').includes(marker))) {
+                  await github.rest.issues.createComment({owner, repo, issue_number: pr.number,
+                    body: marker + '\n⚠️ Conflict Fixer: This PR has code conflicts. No automatic force-push or content overwrite was attempted. Rebase/resolve manually, then let CI validate the result.'});
+                }
+                continue;
+              }
+              if (fresh.mergeable_state !== 'behind') continue;
+              try {
+                await github.rest.pulls.updateBranch({
+                  owner, repo, pull_number: pr.number, expected_head_sha: fresh.head.sha
+                });
+                core.info('PR #' + pr.number + ': GitHub updated branch cleanly.');
+              } catch (error) {
+                core.warning('PR #' + pr.number + ' requires manual refresh: ' + error.message);
+              }
+            }

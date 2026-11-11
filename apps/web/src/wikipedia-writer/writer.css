@@ -1,0 +1,41 @@
+*{box-sizing:border-box}body{margin:0;background:#f6f7f8;color:#17212b;font:15px/1.5 'Reddit Sans',system-ui,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:#0b63b6;text-decoration:none}a:hover{text-decoration:underline}.ww-header{height:67px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e3e6e8;background:white;padding:0 max(24px,calc((100vw - 1340px)/2))}.ww-brand{font-weight:900;letter-spacing:.045em;color:#ff4500}.ww-brand span{color:#56616f;font-weight:600}.ww-chip{background:#fff3eb;color:#b73700;border-radius:99px;padding:7px 13px;font-size:11px;font-weight:800;letter-spacing:.04em}.ww-main{max-width:1340px;margin:auto;padding:46px 24px 80px}.ww-heading{max-width:800px;margin-bottom:30px}.ww-eyebrow{font-size:12px;color:#cf3b00;letter-spacing:.14em;font-weight:800}.ww-heading h1{font-size:clamp(32px,4vw,54px);letter-spacing:-.055em;line-height:1.1;margin:11px 0}.ww-heading em{font-style:normal;color:#ff4500}.ww-heading p{color:#66717c;font-size:17px}.ww-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}.ww-stack{display:grid;gap:22px;min-width:0}.ww-card{background:#fff;border:1px solid #dfe3e7;border-radius:18px;padding:25px;box-shadow:0 4px 18px #2432440a;min-width:0}.ww-card-head{display:flex;gap:14px;align-items:center;margin-bottom:23px}.ww-step{flex:0 0 40px;height:40px;display:grid;place-items:center;border-radius:12px;background:#fff0e9;color:#e84000;font-weight:900}.ww-card h2{font-size:21px;letter-spacing:-.035em;margin:0}.ww-card-head p{font-size:13px;color:#71808b;margin:3px 0 0}.ww-card label{display:block;font-weight:700;font-size:13px;margin:14px 0;color:#414b58}.ww-card input,.ww-card select,.ww-card textarea{display:block;width:100%;margin-top:8px;border:1px solid #d8dee5;border-radius:10px;padding:11px 12px;color:#1f2937;background:white;outline-color:#ff4500;font-size:14px}.ww-card textarea{resize:vertical;min-height:44px}.ww-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.ww-note{font-size:12px;color:#687583;line-height:1.65}.ww-primary{background:#ff4500!important;color:#fff!important;border-color:#ff4500!important;font-weight:800!important}.ww-card button{border:1px solid #d4dce4;background:#fff;color:#293643;padding:12px 15px;border-radius:10px;font-weight:700}.ww-card button:disabled{opacity:.5;cursor:not-allowed}.ww-card>button.ww-primary{width:100%;margin-top:15px}.ww-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px}.ww-status{font-size:12px;font-weight:700;color:#79582d}.ww-count{color:#ff4500}.ww-table-scroll{overflow:auto;max-height:570px;border:1px solid #eceff2;border-radius:12px}.ww-table-scroll table{border-collapse:collapse;min-width:850px;width:100%;font-size:12px}.ww-table-scroll th{position:sticky;top:0;background:#f7f8f9;text-align:left;white-space:nowrap}.ww-table-scroll td,.ww-table-scroll th{padding:9px;border-bottom:1px solid #ecedf1;vertical-align:top}.ww-table-scroll textarea{min-width:115px;margin:0;padding:8px;font-size:12px}.ww-card button.ww-remove{padding:2px 8px;color:#c32b20}.ww-empty{color:#76808b;text-align:center;padding:20px}.ww-alert{max-width:1340px;border:1px solid #b5dbc6;background:#effaf2;padding:15px 20px;margin-top:20px;border-radius:12px}.ww-error{border-color:#fac0b6;background:#fff3ef;color:#ad210e}.ww-footer{text-align:center;border-top:1px solid #e2e5e8;color:#73808b;padding:25px;font-size:12px}@media(max-width:900px){.ww-layout{grid-template-columns:1fr}.ww-header{padding:15px}.ww-chip{display:none}}@media(max-width:560px){.ww-main{padding:30px 12px}.ww-card{padding:18px}.ww-grid{grid-template-columns:1fr}.ww-heading p{font-size:15px}}
+/* Explicit on-device API key preference; no layout changes outside Writer. */
+.ww-key-preference{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:12px 0 5px}
+.ww-card .ww-key-preference label{display:inline-flex;align-items:center;gap:9px;margin:0;color:#293643;font-weight:700;cursor:pointer}
+.ww-card .ww-key-preference input[type="checkbox"]{display:inline-block;appearance:auto;width:17px;height:17px;margin:0;accent-color:#137c52}
+.ww-card .ww-key-preference button{padding:8px 12px;font-size:12px}
+
+/* Wikipedia Writer step progress: real milestone completion, no fake API percentage. */
+.ww-progress-overview{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:11px;font-size:13px}
+.ww-progress-overview strong{font-size:15px;color:#253344}
+.ww-progress-overview span{font-variant-numeric:tabular-nums;color:#657484}
+.ww-progress-track{position:relative;height:12px;overflow:hidden;border-radius:999px;background:#edf0f3;border:1px solid #e1e6eb}
+.ww-progress-fill{display:block;height:100%;background:#ff4500;border-radius:999px;transition:width .35s ease}
+.ww-progress-active:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,#ffffff8a 50%,transparent 100%);transform:translateX(-100%);animation:ww-progress-shimmer 2.2s ease-in-out infinite}
+@keyframes ww-progress-shimmer{to{transform:translateX(100%)}}
+.ww-progress-steps{margin:20px 0 14px;padding:0;display:grid;gap:14px;list-style:none}
+.ww-progress-step{display:flex;align-items:center;gap:12px}
+.ww-progress-marker{height:34px;width:34px;flex:0 0 34px;display:grid;place-items:center;border:1px solid #dce2e8;border-radius:50%;background:#f7f8fa;color:#788390;font-size:13px;font-weight:800}
+.ww-progress-step strong{display:block;font-size:13px;color:#435061}
+.ww-progress-step small{display:block;color:#85919d;font-size:12px;margin-top:2px}
+.ww-progress-step.is-done .ww-progress-marker{background:#eaf7f0;border-color:#9bd6b3;color:#187644}
+.ww-progress-step.is-done strong{color:#187644}
+.ww-progress-step.is-active .ww-progress-marker{background:#fff0e9;border-color:#ff9b74;color:#dd450a;box-shadow:0 0 0 3px #fff2eb}
+.ww-progress-step.is-active strong{color:#d84000}
+.ww-progress-step.is-error .ww-progress-marker{background:#fff0ed;border-color:#f0b3a8;color:#b72318}
+.ww-progress-detail{border:1px solid #ebd6c7;background:#fff8f3;padding:12px;border-radius:11px;font-size:13px;color:#6d3e23;overflow-wrap:anywhere}
+.ww-progress-model{font-weight:700;font-size:12px;color:#36556e;overflow-wrap:anywhere}
+@media(prefers-reduced-motion:reduce){.ww-progress-active:after{animation:none}.ww-progress-fill{transition:none}}
+
+/* Sequential Wikipedia queue; Reddit-inspired light UI */
+.ww-queue-actions{display:flex;gap:10px;margin-top:15px;align-items:stretch}
+.ww-queue-actions button{flex:1;min-width:0;font-size:13px}
+.ww-queue-actions .ww-primary{flex:0 1 48%}
+.ww-queue-list{padding:0;margin:0;list-style:none;display:grid;gap:10px}
+.ww-queue-list li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;background:#f7f8f9;border:1px solid #e4e8ec;border-radius:12px}
+.ww-queue-meta{min-width:0;overflow-wrap:anywhere}
+.ww-queue-meta strong,.ww-queue-meta small{display:block}
+.ww-queue-meta strong{font-size:13px}.ww-queue-meta small{font-size:11px;color:#657484;margin-top:3px}
+.ww-queue-controls{display:flex;gap:5px;flex-shrink:0}
+.ww-card .ww-queue-controls button{padding:6px 9px;font-size:12px}
+@media(max-width:560px){.ww-queue-actions{flex-direction:column}.ww-queue-actions .ww-primary{flex-basis:auto}.ww-queue-list li{align-items:flex-start;flex-direction:column}}

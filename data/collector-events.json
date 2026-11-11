@@ -1,0 +1,776 @@
+[
+  {
+    "pr": 23,
+    "head_sha": "950063a2bfbae82b652f36d400a93568a92a03a5",
+    "merge_sha": "f85813a345f5dc8acbe8cf6118b60448a32718f1",
+    "merged_at": "2026-11-06T16:17:55Z",
+    "run_id": 42251027089,
+    "ci": "success",
+    "workflow_change": true
+  },
+  {
+    "pr": 24,
+    "head_sha": "b44756a6e447f00e8c94591091d3903168c0b617",
+    "merge_sha": "ab6067c7af6446d0ae4bde3431321cfde24df2c9",
+    "merged_at": "2026-11-06T16:20:36Z",
+    "run_id": 42251447389,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 25,
+    "head_sha": "9a73e99be478d8da5ede4b962b700790b7f10887",
+    "merge_sha": "9f57542d117d05e059bb109a4b81d3749999cf4b",
+    "merged_at": "2026-11-06T16:21:39Z",
+    "run_id": 42251562431,
+    "ci": "success",
+    "workflow_change": true
+  },
+  {
+    "pr": 26,
+    "head_sha": "0b80f4ee77441a3863c2744b94e9969eb14be274",
+    "merge_sha": "4e070e466f099befab98f9ed18127fca0df472de",
+    "merged_at": "2026-11-06T16:22:42Z",
+    "run_id": 42251750204,
+    "ci": "success",
+    "workflow_change": true
+  },
+  {
+    "pr": 27,
+    "head_sha": "70559a0d14636394b8c29fc2c2d3fb509e4ef179",
+    "merge_sha": "a47bacdbadd5d26871ce90f98b6d8cb78b4e51d2",
+    "merged_at": "2026-11-06T16:26:28Z",
+    "run_id": 42252368788,
+    "ci": "success",
+    "workflow_change": true
+  },
+  {
+    "pr": 28,
+    "head_sha": "91daf4b7c0726ccc083dcd282b58f68a65c9b9d7",
+    "merge_sha": "fbfe01e7d00e49bca2c3a769f092f4ce172501d3",
+    "merged_at": "2026-11-06T16:33:02Z",
+    "run_id": 42253388396,
+    "ci": "success",
+    "workflow_change": true
+  },
+  {
+    "pr": 29,
+    "head_sha": "a40d5cfd43fec491387cfbb919e65e0075b5304a",
+    "merge_sha": "49ac2749b485786aefac7ad32ef3f68aa53821a4",
+    "merged_at": "2026-11-06T17:11:42Z",
+    "run_id": 42259336978,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 30,
+    "head_sha": "305b8b43655b40b62a2847817de26c4dff038a7c",
+    "merge_sha": "615fe26c3c6139e24706d812b061f4f36fcdd061",
+    "merged_at": "2026-11-06T17:47:00Z",
+    "run_id": 42264742697,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 31,
+    "head_sha": "4a14c482e6fea4e6bb880e544c4a3d03e53ff2bb",
+    "merge_sha": "be1bf49cc7ecd52d72f9ae3877eb4aafd0c305c3",
+    "merged_at": "2026-11-06T23:20:49Z",
+    "run_id": 42311254580,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 32,
+    "head_sha": "7cc378bfd62bea994a3cc88f82c021139f271519",
+    "merge_sha": "dd246d4a8f228518bde6a4d1dee076d51dc9d00c",
+    "merged_at": "2026-11-06T23:39:30Z",
+    "run_id": 42313335725,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 33,
+    "head_sha": "caea055e8335e7750634521a39c558a95996e1a5",
+    "merge_sha": "195000225b79d7d5dca46ad199fad288607ec8e3",
+    "merged_at": "2026-11-07T00:39:49Z",
+    "run_id": 42319561359,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 36,
+    "head_sha": "a4ee6f04d00b14f9df0cefea9376ffc43d1ce5ab",
+    "merge_sha": "cf46720dba48e963d38c4601420a0eaa6c138f8f",
+    "merged_at": "2026-11-07T00:48:49Z",
+    "run_id": 42320482803,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 34,
+    "head_sha": "c94aff5ca7461ba1be63e622b12dc7c51ec51b78",
+    "merge_sha": "39d8f98e030ba2595abbbaaa36c2c014f0c2fca2",
+    "merged_at": "2026-11-07T00:50:33Z",
+    "run_id": 42320653957,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 37,
+    "head_sha": "8a6915950ef5a1380eda61a30be44c6460752d99",
+    "merge_sha": "9fd03cd8d357d77e3f7f431fa38c0ca5d4681b5b",
+    "merged_at": "2026-11-07T00:53:39Z",
+    "run_id": 42320951254,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 38,
+    "head_sha": "0d27395b3102fb6c2a4d2259eb8a0db1a4b1db8e",
+    "merge_sha": "c75268c94e4d18064051cbf395f90e591b50409a",
+    "merged_at": "2026-11-07T00:56:57Z",
+    "run_id": 42321260979,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 39,
+    "head_sha": "c337333187c4dc042474f93e2f15d2e511505e71",
+    "merge_sha": "02924a5c981dba71c434beb12b52dbf184034931",
+    "merged_at": "2026-11-07T01:01:04Z",
+    "run_id": 42321649414,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 40,
+    "head_sha": "2c26c1148bdac2550808c2ecc240b9901727be06",
+    "merge_sha": "16523c5bfc169c9df40bc4930c246aad6dc04c58",
+    "merged_at": "2026-11-07T01:02:10Z",
+    "run_id": 42321760638,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 41,
+    "head_sha": "8b43b349c18e4c56c8d46d45bda7024c5ff9cac0",
+    "merge_sha": "a3b547541120f99959f1766d020d30d613e0d14e",
+    "merged_at": "2026-11-07T01:04:31Z",
+    "run_id": 42321986154,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 42,
+    "head_sha": "5bae76307fbdc78b544cf587e54c3258265162c4",
+    "merge_sha": "729d535be434a5f1616bf6a88b9bb1b4803d2fcc",
+    "merged_at": "2026-11-07T01:07:28Z",
+    "run_id": 42322277332,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 43,
+    "head_sha": "ab2334c665af8d11d27762776725123891bbdc32",
+    "merge_sha": "8b9d657ce61a1da56e22a359f2d0f7066721d0af",
+    "merged_at": "2026-11-07T01:09:19Z",
+    "run_id": 42322453259,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 44,
+    "head_sha": "14d3ab252ba1e12ee46cb029c28646339265201b",
+    "merge_sha": "0f6aeaff4b363b08f5bdca9c44e0e30bf25e5773",
+    "merged_at": "2026-11-07T01:10:49Z",
+    "run_id": 42322591539,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 47,
+    "head_sha": "d6ec523e140d8e163371ff130fd519a880965828",
+    "merge_sha": "d666a363e0577ee57212faeb80061249af2e5f0c",
+    "merged_at": "2026-11-07T01:12:49Z",
+    "run_id": 42322793574,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 46,
+    "head_sha": "8a9156a771ddcd887749be1d6645886a5b69ea27",
+    "merge_sha": "55e178b46f68f7f9b5ea2237291ff9b350f4bc44",
+    "merged_at": "2026-11-07T01:16:13Z",
+    "run_id": 42323121552,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 48,
+    "head_sha": "fbdc25d13aaab9061cfef0a01e468cc0c6f00f46",
+    "merge_sha": "76be114b7f37ee73244052c94c76f05ca3c03d96",
+    "merged_at": "2026-11-07T01:19:43Z",
+    "run_id": 42323443750,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 49,
+    "head_sha": "7595397bdc4274de02ea810422e0b35c5ab3d117",
+    "merge_sha": "824f56bd7b00894a25aab8d1ea4972d5f09c1d1f",
+    "merged_at": "2026-11-07T01:22:59Z",
+    "run_id": 42323753042,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 50,
+    "head_sha": "7424d4ba678a37598dad9bfe9135c0aa496ad3de",
+    "merge_sha": "1de71ddbd1bb03b54a9b93004ca57f0b70f0e0df",
+    "merged_at": "2026-11-07T01:24:02Z",
+    "run_id": 42323823599,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 52,
+    "head_sha": "eaa7dcc6ac2861e00cf01351842aebdd57ee38a7",
+    "merge_sha": "4fe54c5b7cf05c333a51c61e335e2960b91892bd",
+    "merged_at": "2026-11-07T01:29:37Z",
+    "run_id": 42324331505,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 54,
+    "head_sha": "da9940be7ebf5268b20ed4d4e4526859a54f335e",
+    "merge_sha": "dea78e55760988a4b88ea556568b83ef92e3b319",
+    "merged_at": "2026-11-07T01:40:06Z",
+    "run_id": 42325262647,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 53,
+    "head_sha": "225f2e1c6c0fc30c425eeb0007895c3e645a7057",
+    "merge_sha": "7f8ebaaf6bf6fa60dd40ac12128ac54332a001a6",
+    "merged_at": "2026-11-07T01:41:15Z",
+    "run_id": 42325386004,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 55,
+    "head_sha": "05e4091fd4772633ca718dbe87840d6d42ebf097",
+    "merge_sha": "9e61e71498a1a12192a92f3da8ef76cbdc235ec9",
+    "merged_at": "2026-11-07T01:47:39Z",
+    "run_id": 42325921828,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 56,
+    "head_sha": "0c67f7b7979f207226fc0d13a0fae9f20cdad61d",
+    "merge_sha": "9012fabd868db699a09291f302398710b320361d",
+    "merged_at": "2026-11-07T02:10:05Z",
+    "run_id": 42327834238,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 57,
+    "head_sha": "b4ce56a0afea3ac501226801fee1651582dabcdd",
+    "merge_sha": "e650da9b91653f90e2bc6ecdc95e9c4619e4b2c6",
+    "merged_at": "2026-11-07T02:18:47Z",
+    "run_id": 42328590872,
+    "ci": "success",
+    "workflow_change": true
+  },
+  {
+    "pr": 58,
+    "head_sha": "57051d5123017f3a342a7d96669dd7c91555c160",
+    "merge_sha": "c953f017d6ba491a34b8b50f81ed6432a34daba9",
+    "merged_at": "2026-11-07T02:31:22Z",
+    "run_id": 42329648227,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 59,
+    "head_sha": "c7e3d49cd08d2ac112a36ae8de76f09bff5dd538",
+    "merge_sha": "5f224051f84dd9fc98056717a3fcd47cdca52517",
+    "merged_at": "2026-11-07T02:43:59Z",
+    "run_id": 42330664653,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 60,
+    "head_sha": "0eb1a43c5eecf691043cc100567057dec1f9b59e",
+    "merge_sha": "93e0423bfbd56dc5d07d256eda94987d87a3f436",
+    "merged_at": "2026-11-07T02:46:18Z",
+    "run_id": 42330847846,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 61,
+    "head_sha": "74068fe70c078e07a6227f1b0118b5630f874251",
+    "merge_sha": "6313753abc35bbd7c0add590cd86ef480b23f6ee",
+    "merged_at": "2026-11-07T02:50:57Z",
+    "run_id": 42331213598,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 62,
+    "head_sha": "81ae1868f3d3e878704633534543868152884e6f",
+    "merge_sha": "600ca1880b0b5f8f20ead380b1c63478c53f4099",
+    "merged_at": "2026-11-07T02:54:23Z",
+    "run_id": 42331471525,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 63,
+    "head_sha": "e516ebf9b776a4925b85695508ce8f5e4ed532fa",
+    "merge_sha": "f5c8544b5dbf0c31cbea78d4576e2301e4bd7a6e",
+    "merged_at": "2026-11-07T03:00:04Z",
+    "run_id": 42331885813,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 64,
+    "head_sha": "6155bd1c4a3e03e7d2b8e422d49e4eb2cff02cf5",
+    "merge_sha": "f62f26c2aa3fd448ef8cca905969c3e5f66a9cbd",
+    "merged_at": "2026-11-07T03:04:26Z",
+    "run_id": 42332249417,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 65,
+    "head_sha": "c744b5a4541761093aab1787c5b9231338e63080",
+    "merge_sha": "cc0266c40575dd2b41ced30bcfec228e1f541a21",
+    "merged_at": "2026-11-07T03:06:30Z",
+    "run_id": 42332422276,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 67,
+    "head_sha": "3f1d838b170bc42e9eca34c68a558a49ea8d60ce",
+    "merge_sha": "91e5cdebca022c6381f075e947fa0eca59114e6a",
+    "merged_at": "2026-11-07T03:11:11Z",
+    "run_id": 42332802174,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 68,
+    "head_sha": "274f1a7b96d480cebbda01f4f63ab2e5242fc279",
+    "merge_sha": "684554b8547fbc2c0bb1d19e152bb8cd9fdea774",
+    "merged_at": "2026-11-07T03:15:11Z",
+    "run_id": 42333121584,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 70,
+    "head_sha": "1cfa9e9e8767768bf57ba3f3db5fa407b0be5d4e",
+    "merge_sha": "346da98743c5e1d006c7446bb623afd1ae19e4e4",
+    "merged_at": "2026-11-07T03:25:32Z",
+    "run_id": 42333940994,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 71,
+    "head_sha": "d795cc47fad8c92ea90761e425ff1fc33d8b1b87",
+    "merge_sha": "4d4f7f258c5aae3b37ab6817a1bf3c382320d5f0",
+    "merged_at": "2026-11-07T03:28:13Z",
+    "run_id": 42334135277,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 72,
+    "head_sha": "435b7c84722672716a93b4f129e8c97b6de9dd79",
+    "merge_sha": "73fc3ae9e912e804e7b86b01e5e59443bcd8ad23",
+    "merged_at": "2026-11-07T03:32:59Z",
+    "run_id": 42334495702,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 73,
+    "head_sha": "6362b6c8be90e4e86b3c1356217989591c272b3e",
+    "merge_sha": "571a7f881b0942d93bae33e4f53041cf967d59e2",
+    "merged_at": "2026-11-07T03:34:54Z",
+    "run_id": 42334646380,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 74,
+    "head_sha": "4048ac605a37d615184eef4876f1507e47460e6a",
+    "merge_sha": "0dc1c99a03c1dc2b6fb857aa195313e8011cfd35",
+    "merged_at": "2026-11-07T03:42:15Z",
+    "run_id": 42335185236,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 75,
+    "head_sha": "116721e7d16c3a0f4c45a4c2917868a2465e6f60",
+    "merge_sha": "7786c45ef3c7c547ea4d79f87ffa92d5cce868b5",
+    "merged_at": "2026-11-07T03:43:40Z",
+    "run_id": 42335286797,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 77,
+    "head_sha": "33badc61a411a05c8c054c57bd1a985304c72a17",
+    "merge_sha": "a6aa02e17d6b240034a5f5d5a26fbd25ab9f8204",
+    "merged_at": "2026-11-07T03:57:08Z",
+    "run_id": 42336251844,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 78,
+    "head_sha": "93ef9c162252aad38c9e19eb0386757aac162194",
+    "merge_sha": "bc4e950d0e2b21f4880b3fde3d36a3b5ba00210c",
+    "merged_at": "2026-11-07T03:59:16Z",
+    "run_id": 42336391799,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 79,
+    "head_sha": "591dc736da2f1f0eab3540318c1d083c2f52f8e6",
+    "merge_sha": "61fbbc99d01101ce6bf3b613181892b271148a24",
+    "merged_at": "2026-11-07T04:12:23Z",
+    "run_id": 42337393485,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 80,
+    "head_sha": "ce9a6e2d921a1a6dd4fc3fef4b45c90660045451",
+    "merge_sha": "b670d60f0f45098299aa3070ed25e523af70a0d9",
+    "merged_at": "2026-11-07T04:23:40Z",
+    "run_id": 42338247679,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 81,
+    "head_sha": "72b9433866ef269ed2646138a54c4e58ed11be22",
+    "merge_sha": "3061790dd8b410046b4aceeca5809fb3134cc922",
+    "merged_at": "2026-11-07T04:24:51Z",
+    "run_id": 42338338273,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 82,
+    "head_sha": "9b9a7ddea4a2f395080b8ee2d9681c2dca518c52",
+    "merge_sha": "fc82aa12e1d0edd489f40d6f75bfd8a1e456813a",
+    "merged_at": "2026-11-07T04:46:52Z",
+    "run_id": 42339907415,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 83,
+    "head_sha": "a37c8ffca25c3bc803073c533c88a83ad23cd74e",
+    "merge_sha": "6eeac709847f2567d417cf4ab2c1ac53f75192b5",
+    "merged_at": "2026-11-07T04:49:00Z",
+    "run_id": 42340054629,
+    "ci": "success",
+    "workflow_change": true
+  },
+  {
+    "pr": 84,
+    "head_sha": "891d743c12bcf9f3a365c4d414e783f6a6e713bd",
+    "merge_sha": "ec7a60862077563bc6bd5a7612f33de31150f36a",
+    "merged_at": "2026-11-07T04:55:38Z",
+    "run_id": 42340517189,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 85,
+    "head_sha": "d92f676acb29772d664c674999d741e21ee4bf5d",
+    "merge_sha": "eb38fc748c2bd0183a369bae8e1e89b31c58ccca",
+    "merged_at": "2026-11-07T04:57:52Z",
+    "run_id": 42340664455,
+    "ci": "success",
+    "workflow_change": true
+  },
+  {
+    "pr": 86,
+    "head_sha": "3628f06ddd10b53fef57903840e6c3c219bfb09f",
+    "merge_sha": "0f851df392bacc000a1d945054067eab9f4b2c8f",
+    "merged_at": "2026-11-07T06:13:07Z",
+    "run_id": 42345999303,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 87,
+    "head_sha": "65d2fb9cf8f81e5b1ac416dc4d644e06d6d2e73d",
+    "merge_sha": "fea0015b73afe8ef89266b976c49155dffeabb02",
+    "merged_at": "2026-11-07T06:26:27Z",
+    "run_id": 42347002726,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 88,
+    "head_sha": "d0ebe9a19f3deae73d3cb94d0b49fc58a88d1683",
+    "merge_sha": "07cd7996f53c0900447f851edf177aa91366b8d0",
+    "merged_at": "2026-11-07T06:28:18Z",
+    "run_id": 42347134483,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 89,
+    "head_sha": "93beb8182abbda43965019bc731ef169d41b4ab9",
+    "merge_sha": "dce0ad7dd1eb15ae9568a321517ed8fca63bf255",
+    "merged_at": "2026-11-07T08:35:56Z",
+    "run_id": 42356158127,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 90,
+    "head_sha": "f9d1f1b2456d362f41b43c193632c33546eed1b6",
+    "merge_sha": "fb18975a03b1a1c18b5af1d0b21cdf7ad51c0bb0",
+    "merged_at": "2026-11-07T08:45:27Z",
+    "run_id": 42356810392,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 91,
+    "head_sha": "6326db3600b2c84b7c8fccab9e65a9d21bb13718",
+    "merge_sha": "230f10e1ce0fad380c1696f6e9822fd8242a3e24",
+    "merged_at": "2026-11-07T08:46:40Z",
+    "run_id": 42356896951,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 92,
+    "head_sha": "c50fd44c3a9ecf2cfecd5a1f4752f57b4ce0977a",
+    "merge_sha": "33a3ba998cc0c4fa3918e9475da13b178819ee48",
+    "merged_at": "2026-11-07T08:56:50Z",
+    "run_id": 42357592453,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 93,
+    "head_sha": "a39c9b021eeee67730f786ccda4d03f803796f2f",
+    "merge_sha": "4b396149540a48fd6be914be04019f25c4db5e82",
+    "merged_at": "2026-11-07T09:02:53Z",
+    "run_id": 42358023707,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 96,
+    "head_sha": "822b3fe8da9c36812883290e60743af8f556debe",
+    "merge_sha": "d4974a2a08c7419395b15ec8261811fc7598f2e1",
+    "merged_at": "2026-11-07T09:13:09Z",
+    "run_id": 42358776637,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 94,
+    "head_sha": "078b27aa94b68e8df13ff3fd6107b91822b95643",
+    "merge_sha": "e2e2b4c88cd0d6e26ed7bea8f8384d5a27a7fd3a",
+    "merged_at": "2026-11-07T09:16:35Z",
+    "run_id": 42359032772,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 97,
+    "head_sha": "741955c8f1dbbab8639e1bafda7f707657eab29a",
+    "merge_sha": "21e4b6f63958822956d033afe3657fc855c02fd6",
+    "merged_at": "2026-11-07T09:22:00Z",
+    "run_id": 42359419310,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 98,
+    "head_sha": "5766c75c7608393443dd79b65c462f27992bccfa",
+    "merge_sha": "83f4990986dc2c578067d18cd67832193b2732ca",
+    "merged_at": "2026-11-07T09:28:51Z",
+    "run_id": 42359892268,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 99,
+    "head_sha": "c82e3333f1d14c1e3ed157c1488c0bce9a107600",
+    "merge_sha": "ed9ceed48d72dbe63d0f60280b71fa83a75cd442",
+    "merged_at": "2026-11-07T09:34:16Z",
+    "run_id": 42360285386,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 100,
+    "head_sha": "11484f514b235e58421eecb4a07084f425a59069",
+    "merge_sha": "d92183413da135c3172727d6540fc5293d5117eb",
+    "merged_at": "2026-11-07T09:40:41Z",
+    "run_id": 42360723514,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 101,
+    "head_sha": "e1564c45e363bf8190e87ac977cf3c47a79aed00",
+    "merge_sha": "7608563b144fcf26f629b166c9616c31f0b90ed6",
+    "merged_at": "2026-11-07T09:43:05Z",
+    "run_id": 42360891345,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 102,
+    "head_sha": "74a04714ac5c80735d7801bf10e415c4ca165058",
+    "merge_sha": "4400c4cc70456a04a4eb6a89af9e4bb0f28313f2",
+    "merged_at": "2026-11-07T09:48:38Z",
+    "run_id": 42361274473,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 103,
+    "head_sha": "7cef2dea0c7ecde56a7a4201e557721003653f75",
+    "merge_sha": "70b5f28417c51318b7ad0dc26f6f2810dd6b7fe1",
+    "merged_at": "2026-11-07T09:50:51Z",
+    "run_id": 42361428959,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 104,
+    "head_sha": "c4ffb1d61f9eb7e60b0a46ad04216dc917381351",
+    "merge_sha": "d334d0523d4f0fa482aea0de5b5a59c41c0806bd",
+    "merged_at": "2026-11-07T09:59:49Z",
+    "run_id": 42362017168,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 106,
+    "head_sha": "b8c84101f370d6bbfe2e4ed60970dc8ace598ff3",
+    "merge_sha": "07fc39ac69c0b22f2eb9d37797501d687c301595",
+    "merged_at": "2026-11-07T10:02:17Z",
+    "run_id": 42362202825,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 105,
+    "head_sha": "b76ae5860cdca76629faae4eed92da42e059060a",
+    "merge_sha": "a5589a4da62e583fe3322081e595f998c0226227",
+    "merged_at": "2026-11-07T10:03:27Z",
+    "run_id": 42362291890,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 107,
+    "head_sha": "eee33d0ff5b1d38ef4a3da37ae9ab76bd36a1cca",
+    "merge_sha": "ba527f5aaf2519db10869826feff848313ea8c78",
+    "merged_at": "2026-11-07T10:19:18Z",
+    "run_id": 42363436714,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 108,
+    "head_sha": "5ab98e0216d9884794c719094e92bc1f7f4c8d85",
+    "merge_sha": "a748bd9581ae94b51ebe09e474c07f61dd558b48",
+    "merged_at": "2026-11-07T11:08:54Z",
+    "run_id": 42366925528,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 109,
+    "head_sha": "b11057723836ce888880427c6fc3249b1d2628fe",
+    "merge_sha": "148781cc4e6c031ad1ccfdd26bc137c8db70f34c",
+    "merged_at": "2026-11-07T11:12:05Z",
+    "run_id": 42367159811,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 110,
+    "head_sha": "ddc642c0c4186a61b27e9445461a1b1eb14698de",
+    "merge_sha": "8fabfdb922a249551ae6b30ee7c5396b0d42a327",
+    "merged_at": "2026-11-07T11:16:52Z",
+    "run_id": 42367493592,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 111,
+    "head_sha": "55d1f6f1af14f68e7093c9dbefe5b0a5af876b31",
+    "merge_sha": "476381834e78fce1e395aa56f21291261dda9f4b",
+    "merged_at": "2026-11-07T11:20:13Z",
+    "run_id": 42367730357,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 112,
+    "head_sha": "7fb787b5cb7ba198a1467cd1a587717c639958dc",
+    "merge_sha": "873b67319452cd55afe9172822fe60b724c28df0",
+    "merged_at": "2026-11-07T11:42:58Z",
+    "run_id": 42369326912,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 113,
+    "head_sha": "afc5ffb9170831d36955eb09e7f59b58f1f90947",
+    "merge_sha": "6ec9bfa4cc38210672191f8d2290d2af38fb0f7c",
+    "merged_at": "2026-11-07T11:59:06Z",
+    "run_id": 42370443301,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 114,
+    "head_sha": "e2e4ccd349d203b41f6d6bc1fc033718a51a5dbe",
+    "merge_sha": "ffd5ada33847c65dd3df60530995c2dff8b4ee6f",
+    "merged_at": "2026-11-08T04:24:49Z",
+    "run_id": 42446704487,
+    "ci": "success",
+    "workflow_change": false
+  },
+  {
+    "pr": 115,
+    "head_sha": "0be533057b040c65754cdf6126835731bd70ed8c",
+    "merge_sha": "012f1e2895f892a6b42f237fec73d3777ee21607",
+    "merged_at": "2026-11-08T04:40:25Z",
+    "run_id": 42447742275,
+    "ci": "success",
+    "workflow_change": false
+  }
+]

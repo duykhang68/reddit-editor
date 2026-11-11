@@ -1,0 +1,149 @@
+name: Commit taxonomy · Classify main
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      backfill_count:
+        description: "Recent main commits to classify (1-100)"
+        required: false
+        default: "30"
+        type: string
+
+permissions:
+  contents: read
+  statuses: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: classify-main
+  cancel-in-progress: false
+
+jobs:
+  classify:
+    name: Classify commit and tag merged PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/github-script@v7
+        env:
+          BACKFILL_COUNT: ${{ inputs.backfill_count || '30' }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const categories = ['feat', 'fix', 'hotfix', 'docs', 'ci', 'refactor', 'test', 'perf', 'security', 'build', 'chore', 'revert'];
+            const classify = (message) => {
+              const title = (message || '').split('\n')[0].trim();
+              const match = title.match(/^(feat|fix|hotfix|docs|ci|refactor|test|perf|security|build|chore|revert)(\([^)]*\))?!?:\s/i);
+              return match ? match[1].toLowerCase() : 'other';
+            };
+            const categoryInfo = {
+              feat: ['Feature', '1D76DB'],
+              fix: ['Bug fix', 'D73A4A'],
+              hotfix: ['Urgent hotfix', 'B60205'],
+              docs: ['Documentation', '0075CA'],
+              ci: ['CI/CD', '5319E7'],
+              refactor: ['Refactor', 'FBCA04'],
+              test: ['Tests', '0E8A16'],
+              perf: ['Performance', 'C2E0C6'],
+              security: ['Security', 'B60205'],
+              build: ['Build tooling', 'BFD4F2'],
+              chore: ['Maintenance', 'D4C5F9'],
+              revert: ['Rollback / revert', 'F9D0C4'],
+              other: ['Unclassified; use Conventional Commits', 'EDEDED']
+            };
+
+            async function ensureLabel(category) {
+              const [description, color] = categoryInfo[category];
+              const name = 'type:' + category;
+              try {
+                await github.rest.issues.getLabel({owner, repo, name});
+              } catch (error) {
+                if (error.status !== 404) throw error;
+                try {
+                  await github.rest.issues.createLabel({owner, repo, name, color, description});
+                } catch (createError) {
+                  if (createError.status !== 422) throw createError;
+                }
+              }
+              return name;
+            }
+
+            async function markCommit(commit) {
+              const category = classify(commit.commit.message);
+              // GitHub does not support commit labels. Status contexts are displayed on commit pages.
+              await github.rest.repos.createCommitStatus({
+                owner, repo, sha: commit.sha, state: 'success',
+                context: 'taxonomy/type:' + category,
+                description: categoryInfo[category][0].slice(0, 140)
+              });
+              core.info(commit.sha.slice(0, 7) + ' → type:' + category);
+              return category;
+            }
+
+            async function labelRelatedPR(sha, category) {
+              const prs = await github.paginate(github.rest.repos.listPullRequestsAssociatedWithCommit, {
+                owner, repo, commit_sha: sha, per_page: 100
+              });
+              const merged = prs.filter(pr => pr.merged_at && pr.base.ref === 'main');
+              if (!merged.length) return;
+              const label = await ensureLabel(category);
+              for (const pr of merged) {
+                const existing = await github.paginate(github.rest.issues.listLabelsOnIssue, {
+                  owner, repo, issue_number: pr.number, per_page: 100
+                });
+                for (const old of existing) {
+                  if (old.name.startsWith('type:') && old.name !== label) {
+                    await github.rest.issues.removeLabel({owner, repo, issue_number: pr.number, name: old.name});
+                  }
+                }
+                await github.rest.issues.addLabels({
+                  owner, repo, issue_number: pr.number, labels: [label]
+                });
+                core.info('PR #' + pr.number + ' → ' + label);
+              }
+            }
+
+            let commits;
+            if (context.eventName === 'workflow_dispatch') {
+              const requested = Number(process.env.BACKFILL_COUNT);
+              if (!Number.isInteger(requested) || requested < 1 || requested > 100) {
+                core.setFailed('backfill_count must be 1-100'); return;
+              }
+              const response = await github.rest.repos.listCommits({
+                owner, repo, sha: 'main', per_page: requested
+              });
+              commits = response.data;
+            } else {
+              // Classify every pushed commit, including a merge commit.
+              const { data } = await github.rest.repos.compareCommits({
+                owner, repo, base: context.payload.before, head: context.sha,
+                per_page: 100
+              });
+              commits = data.commits;
+              if (data.total_commits > commits.length) {
+                core.warning('Push exceeds first 100 commits; run manual backfill for recent commits.');
+              }
+            }
+
+            for (const commit of commits) {
+              // Preserve semantic type of a merged PR, not the auto-generated merge message.
+              const associated = await github.paginate(github.rest.repos.listPullRequestsAssociatedWithCommit, {
+                owner, repo, commit_sha: commit.sha, per_page: 100
+              });
+              const mergedPR = associated.find(pr => pr.merged_at && pr.base.ref === 'main');
+              const isMergeCommit = /^Merge pull request #\d+/.test(commit.commit.message.split('\n')[0]);
+              const category = isMergeCommit && mergedPR ? classify(mergedPR.title) : classify(commit.commit.message);
+              await github.rest.repos.createCommitStatus({
+                owner, repo, sha: commit.sha, state: 'success',
+                context: 'taxonomy/type:' + category,
+                description: categoryInfo[category][0].slice(0, 140)
+              });
+              if (mergedPR && (isMergeCommit || mergedPR.merge_commit_sha === commit.sha)) {
+                await labelRelatedPR(commit.sha, classify(mergedPR.title));
+              }
+              core.info(commit.sha.slice(0, 7) + ' → type:' + category);
+            }

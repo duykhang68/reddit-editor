@@ -1,0 +1,346 @@
+/*!
+ * Tet Dinh Mui Blog · Reddit-inspired light UI hotfix · 2026-11-07
+ * GitHub source of truth: duykhang68/tetdinhmuiblog
+ * Served at: https://duynguyen-reddit-editor.pages.dev/blogger-assets/theme.css
+ *
+ * VISUAL OVERRIDES ONLY. No width/height, grid, float, display, margin,
+ * padding, font-size or Blogger template/DOM changes. Scoped to public blog.
+ * Palette references: redditinc.com/brand and Reddit 2022 brand PDF.
+ * Some contrast-safe tokens are Tet Dinh Mui-specific adaptations.
+ */
+
+:root {
+  --tdm-brand: #ff4500;
+  --tdm-action: #c93600;             /* 5.24:1 with white */
+  --tdm-action-hover: #b93100;       /* 6.00:1 with white */
+  --tdm-canvas: #f2f6f7;
+  --tdm-surface: #ffffff;
+  --tdm-text: #1b2426;
+  --tdm-muted: #596870;
+  --tdm-border: #d7dfe2;
+  --tdm-soft: #fff0e9;
+  --tdm-font: 'Reddit Sans', 'Segoe UI', Arial, sans-serif;
+
+  /* Map existing HealthDaily / Blogger tokens without moving the layout. */
+  --dn-blogger-accent: var(--tdm-brand);
+  --dn-blogger-content-max-width: 1200px; /* Preserve original compatibility token; no layout rule */
+  --hd-brand: var(--tdm-brand);
+  --hd-accent: var(--tdm-action);
+  --hd-accent-hover: var(--tdm-action-hover);
+  --hd-ink: var(--tdm-text);
+  --hd-heading: var(--tdm-text);
+  --hd-muted: var(--tdm-muted);
+  --hd-line: var(--tdm-border);
+  --hd-paper: var(--tdm-surface);
+  --hd-canvas: var(--tdm-canvas);
+  --hd-surface: #f8fafb;
+  --hd-font-body: var(--tdm-font);
+  --hd-font-head: var(--tdm-font);
+  --r-orange: var(--tdm-brand);
+  --r-orange-pale: var(--tdm-soft);
+  --r-ink: var(--tdm-text);
+  --r-gray: var(--tdm-muted);
+  --r-border: var(--tdm-border);
+  --r-card: var(--tdm-surface);
+  --r-canvas: var(--tdm-canvas);
+}
+
+/* 1. Global color/typography: backgrounds, typography, content contrast. */
+body {
+  background-color: var(--tdm-canvas) !important;
+  background-image: none !important;
+  color: var(--tdm-text);
+  font-family: var(--tdm-font);
+}
+body, body p, body li, body a, body button, body input,
+body textarea, body select, .post-body, .widget, .section {
+  font-family: var(--tdm-font);
+}
+#header-wrapper,
+#content-wrapper,
+#main-wrapper .post,
+#rsidebar-wrapper .sidebarpbt .widget,
+#footer-widgets .footer-widget-box,
+#bpostrelated-post {
+  background-color: var(--tdm-surface) !important;
+  background-image: none !important;
+  border-color: var(--tdm-border) !important;
+}
+#outer-wrapper,
+#main-wrapper,
+#main-wrapper .post-body,
+#main-wrapper .post-body p,
+#main-wrapper .post-body li,
+#rsidebar-wrapper,
+#footer-widgets {
+  color: var(--tdm-text);
+}
+#main-wrapper .post-title,
+#main-wrapper .post-title a,
+#main-wrapper .post-title a:visited,
+#rsidebar-wrapper .FeaturedPost .post-title a,
+#rsidebar-wrapper .PopularPosts .item-title a,
+#bpostrelated-post .related-post-item-title,
+#headerbleft h1, #headerbleft h1 a {
+  color: var(--tdm-text) !important;
+}
+#main-wrapper .post-title a:hover,
+#rsidebar-wrapper .FeaturedPost .post-title a:hover,
+#rsidebar-wrapper .PopularPosts .item-title a:hover,
+#bpostrelated-post .related-post-item a:hover {
+  color: var(--tdm-action) !important;
+}
+#main-wrapper .post-body h1,
+#main-wrapper .post-body h2,
+#main-wrapper .post-body h3,
+#main-wrapper .post-body h4,
+#main-wrapper .post-body h5 {
+  color: var(--tdm-text);
+}
+#main-wrapper .post-body a:not(.hd-tag):not(.hd-btn),
+#main-wrapper .post-body a:not(.hd-tag):not(.hd-btn):visited,
+.postmeta-primary a,
+.postmeta-secondary a,
+.sidebarpbt a,
+#footer-widgets a,
+#blog-pager a {
+  color: var(--tdm-action);
+}
+#main-wrapper .post-body a:not(.hd-tag):not(.hd-btn):hover,
+.postmeta-primary a:hover,
+.postmeta-secondary a:hover,
+.sidebarpbt a:hover,
+#footer-widgets a:hover,
+#blog-pager a:hover {
+  color: var(--tdm-action-hover);
+}
+#main-wrapper .post-body a:not(.hd-tag):not(.hd-btn) {
+  text-decoration-color: currentColor;
+}
+.postmeta-primary,
+.postmeta-secondary,
+.breadcrumb-bwrap,
+#headerbleft .description,
+#rsidebar-wrapper .FeaturedPost .post-meta,
+.hd-recent-item time {
+  color: var(--tdm-muted) !important;
+}
+
+/* 2. Top & dropdown menus: replace legacy dark surfaces with light mode. */
+.menu-primary-container,
+.menu-secondary-container,
+.menu-primary li ul,
+.menu-secondary li ul,
+.menu-primary li li,
+.menu-secondary li li {
+  background: var(--tdm-surface) !important;
+  background-image: none !important;
+  border-color: var(--tdm-border) !important;
+}
+.menu-primary li a,
+.menu-primary li a:visited,
+.menu-secondary li a,
+.menu-secondary li a:visited,
+.menu-primary li li a,
+.menu-primary li li a:visited,
+.menu-secondary li li a,
+.menu-secondary li li a:visited {
+  color: var(--tdm-text) !important;
+  background: var(--tdm-surface) !important;
+  background-image: none !important;
+  border-color: var(--tdm-border) !important;
+}
+.menu-primary li a:hover,
+.menu-primary li a:focus-visible,
+.menu-primary li:hover > a,
+.menu-primary li.current-menu-item > a,
+.menu-primary li.current_page_item > a,
+.menu-primary li li a:hover,
+.menu-primary li li:hover > a,
+.menu-secondary li a:hover,
+.menu-secondary li a:focus-visible,
+.menu-secondary li:hover > a,
+.menu-secondary li.current-menu-item > a,
+.menu-secondary li.current_page_item > a,
+.menu-secondary li li a:hover,
+.menu-secondary li li:hover > a {
+  background: var(--tdm-soft) !important;
+  color: var(--tdm-action) !important;
+  border-color: var(--tdm-brand) !important;
+  box-shadow: inset 0 -2px 0 var(--tdm-brand);
+}
+.menu-primary-container, .menu-secondary-container {
+  border-bottom-color: var(--tdm-border) !important;
+}
+
+/* 3. CTA buttons: contrast-safe solid orange with explicit UI states. */
+.readmore a,
+.readmore a:link,
+.readmore a:visited,
+.post-body .hd-btn,
+.post-body a.hd-btn,
+.post-body a.hd-btn:visited {
+  background: var(--tdm-action) !important;
+  color: #fff !important;
+  border-color: var(--tdm-action) !important;
+  background-image: none !important;
+}
+.readmore a:hover,
+.readmore a:focus-visible,
+.post-body .hd-btn:hover,
+.post-body .hd-btn:focus-visible,
+.post-body a.hd-btn:hover,
+.post-body a.hd-btn:focus-visible {
+  background: var(--tdm-action-hover) !important;
+  color: #fff !important;
+  border-color: var(--tdm-action-hover) !important;
+}
+#blog-pager a,
+#blog-pager a:visited {
+  background: var(--tdm-surface) !important;
+  color: var(--tdm-action) !important;
+  border-color: var(--tdm-border) !important;
+}
+#blog-pager a:hover,
+#blog-pager a:focus-visible {
+  background: var(--tdm-soft) !important;
+  color: var(--tdm-action-hover) !important;
+  border-color: var(--tdm-brand) !important;
+}
+
+/* 4. Tabs, search & chips. Preserve widget sizing and mobile flow. */
+.tabs-widget li a,
+.tabs-widget li a:visited {
+  background: var(--tdm-canvas) !important;
+  color: var(--tdm-text) !important;
+  border-color: var(--tdm-border) !important;
+}
+.tabs-widget li a:hover,
+.tabs-widget li a.tabs-widget-current,
+.tabs-widget li a.tabs-widget-current:visited {
+  background: var(--tdm-soft) !important;
+  color: var(--tdm-action) !important;
+  border-color: var(--tdm-brand) !important;
+}
+#search, #rsidebar-wrapper #search,
+#search #s, #rsidebar-wrapper #search #s,
+#content-search input {
+  background-color: var(--tdm-surface) !important;
+  color: var(--tdm-text) !important;
+  border-color: var(--tdm-border) !important;
+}
+#search #s::placeholder,
+#content-search input::placeholder {color: var(--tdm-muted);opacity:1}
+#main-wrapper .meta_categories a[rel='tag'],
+#main-wrapper .hd-tag,
+#rsidebar-wrapper .Label .widget-content a,
+#footer-widgets .Label .widget-content a {
+  border-color: transparent;
+  text-decoration: none !important;
+}
+#main-wrapper .meta_categories a[rel='tag']:hover,
+#main-wrapper .hd-tag:hover,
+#rsidebar-wrapper .Label .widget-content a:hover,
+#footer-widgets .Label .widget-content a:hover {
+  border-color: var(--tdm-brand) !important;
+  box-shadow: 0 0 0 1px rgba(255,69,0,.08);
+}
+
+/* 5. Blog reading elements: color only; article blocks retain their shape. */
+#main-wrapper .post-body blockquote,
+#main-wrapper .post-body .hd-quote,
+#main-wrapper .post-body .hd-callout {
+  background-color: #fff7f3 !important;
+  border-left-color: var(--tdm-brand) !important;
+  color: var(--tdm-text) !important;
+}
+#main-wrapper .post-body pre:not(.hd-codewrap pre),
+#main-wrapper .post-body table th,
+#main-wrapper .post-body .hd-table-wrap th,
+.breadcrumb-bwrap {
+  background-color: #f8fafb !important;
+  color: var(--tdm-text) !important;
+  border-color: var(--tdm-border) !important;
+}
+#main-wrapper .post-body td,
+#main-wrapper .post-body th,
+#main-wrapper .post-body .hd-table-wrap {
+  border-color: var(--tdm-border) !important;
+}
+#main-wrapper .post-body .hd-note--warning {
+  background-color: #fff0e9;
+  border-left-color: var(--tdm-brand);
+}
+.hd-vote-button:not(:disabled) {
+  background-color: var(--tdm-soft);
+  border-color: #ffbfaa;
+  color: var(--tdm-action);
+}
+.hd-vote-button:hover:not(:disabled) {
+  background: var(--tdm-action);
+  color: #fff;
+}
+
+/* 6. Footer: no black bar; all surfaces remain intentionally light. */
+#footer-container,
+#footer,
+#footer-widgets,
+#copyrights,
+#credits {
+  background: var(--tdm-surface) !important;
+  background-image: none !important;
+  color: var(--tdm-text) !important;
+  border-color: var(--tdm-border) !important;
+}
+#copyrights a,
+#credits a,
+#copyrights a:visited,
+#credits a:visited {
+  color: var(--tdm-action) !important;
+}
+#copyrights a:hover,
+#credits a:hover {color: var(--tdm-action-hover) !important}
+
+/* 7. Keyboard visibility and reduced motion without layout mutations. */
+body a:focus-visible,
+body button:focus-visible,
+body input:focus-visible,
+body select:focus-visible,
+body textarea:focus-visible,
+body summary:focus-visible {
+  outline: 3px solid var(--tdm-brand) !important;
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .readmore a, .tabs-widget li a, .hd-vote-button {
+    transition: none !important;
+  }
+}
+
+
+/* 8. Light reading surface for code examples (no size or box-model edits). */
+#main-wrapper .post-body .hd-codewrap,
+#main-wrapper .post-body .hd-codewrap .hd-code-label,
+#main-wrapper .post-body .hd-codewrap pre,
+#main-wrapper .post-body .hd-codewrap code {
+  background-color: #f8fafb !important;
+  color: var(--tdm-text) !important;
+  border-color: var(--tdm-border) !important;
+}
+
+/* 9. Article reading alignment: justify prose, not headings, UI or special blocks.
+ * Scope to Blogger post content, including future articles. Never change layout.
+ * Respect intentional center/right alignment authored in a paragraph.
+ */
+#main-wrapper .post-body p:not(
+  [align='center'], [align='right'],
+  [style*='text-align:center'], [style*='text-align: center'],
+  [style*='text-align:right'], [style*='text-align: right'],
+  blockquote p, .hd-quote p, .hd-callout p, .hd-note p,
+  figcaption p, table p, .hd-table-wrap p, .hd-codewrap p,
+  .hd-btn p, .hd-vote-widget p, .hd-card p
+) {
+  text-align: justify !important;
+  text-align-last: start;
+  text-justify: inter-word;
+}
