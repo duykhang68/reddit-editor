@@ -73,9 +73,9 @@ export async function browserPreviewSmoke() {
       await typesetting.goto(BASE + 'typesetting-tools/', { waitUntil: 'domcontentloaded' });
       await typesetting.locator('#script').fill('Phụ đề thử nghiệm một\nPhụ đề thử nghiệm hai');
       await typesetting.locator('#fromText').click();
-      const timeline = await typesetting.locator('#list').innerText();
-      assert.match(timeline, /Phụ đề thử nghiệm một/);
-      assert.match(timeline, /Phụ đề thử nghiệm hai/);
+      const timeline = await typesetting.locator('#list input[aria-label="Nội dung"]')
+        .evaluateAll(inputs => inputs.map(input => input.value));
+      assert.deepEqual(timeline, ['Phụ đề thử nghiệm một', 'Phụ đề thử nghiệm hai']);
       evidence.interactions.push('typesetting-tools:local-caption-generation');
     } finally { await typesetting.close(); }
 
