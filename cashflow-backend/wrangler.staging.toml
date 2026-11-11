@@ -1,0 +1,17 @@
+# STAGING ONLY — no production resource IDs, tokens, webhooks or schedules.
+# Build first: node scripts/build-cashflow-staging.mjs
+# Deployment requires a separately authorized, least-privilege Cloudflare token.
+name = "reddit-editor-cashflow-staging"
+main = ".staging-dist/worker.mjs"
+compatibility_date = "2026-11-11"
+workers_dev = false
+preview_urls = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "reddit-editor-staging-db"
+database_id = "5dab001b-e703-49bf-974a-35251d630328"
+
+[[r2_buckets]]
+binding = "EVIDENCE"
+bucket_name = "reddit-editor-staging-evidence"
