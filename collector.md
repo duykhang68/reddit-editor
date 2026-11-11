@@ -5,15 +5,15 @@
 > Các PR lịch sử không có bằng chứng được ghi **chưa xác minh nguồn merge**,
 > không tự suy đoán là merge thủ công hay tự động.
 
-Cập nhật: **2026-11-11 03:13 UTC** · Repository: `duykhang68/reddit-editor`
+Cập nhật: **2026-11-11 03:35 UTC** · Repository: `duykhang68/reddit-editor`
 
 ## 📊 Dashboard
 
 | Chỉ số | Giá trị |
 |---|---:|
-| PR đã merge (tối đa 300 PR gần đây) | 4 |
-| AUTO-MERGED có bằng chứng | 1 |
-| Auto-merge PR thường | 1 |
+| PR đã merge (tối đa 300 PR gần đây) | 5 |
+| AUTO-MERGED có bằng chứng | 2 |
+| Auto-merge PR thường | 2 |
 | Auto-merge PR thay đổi workflow | 0 |
 | Nguồn merge chưa xác minh | 3 |
 
@@ -21,22 +21,23 @@ Cập nhật: **2026-11-11 03:13 UTC** · Repository: `duykhang68/reddit-editor`
 
 ```mermaid
 pie showData
-    "Auto-merge verified" : 1
+    "Auto-merge verified" : 2
     "Chưa xác minh" : 3
 ```
 
-`Auto-merge ` ████░░░░░░░░░░░░░░ **1/4**
+`Auto-merge ` ███████░░░░░░░░░░░ **2/5**
 
 ## ✅ Vì sao từng PR được auto-merge?
 
 | PR | Thời điểm UTC | Loại | CI HEAD | Bằng chứng & lý do |
 |---|---|---|---|---|
+| [#5](https://github.com/duykhang68/reddit-editor/pull/5) infra(staging): isolate Cashflow D1, R2, Worker and Pag | 2026-11-11T03:35:38Z | Code/docs | ✅ | CI green trên HEAD `2435dd60`; GitHub chấp nhận merge; [Run #42953760926](https://github.com/duykhang68/reddit-editor/actions/runs/42953760926) |
 | [#4](https://github.com/duykhang68/reddit-editor/pull/4) docs: backend readiness audit and safe Cloudflare stagi | 2026-11-11T03:13:10Z | Code/docs | ✅ | CI green trên HEAD `8082ec23`; GitHub chấp nhận merge; [Run #42951247495](https://github.com/duykhang68/reddit-editor/actions/runs/42951247495) |
 
 ## 🧠 Smart Insights
 
-- **Tỷ lệ workflow trong các auto-merge đã xác minh:** 0.0% (0/1).
-- **Quality gate:** 1 auto-merge có bằng chứng CI thành công trên SHA chính xác.
+- **Tỷ lệ workflow trong các auto-merge đã xác minh:** 0.0% (0/2).
+- **Quality gate:** 2 auto-merge có bằng chứng CI thành công trên SHA chính xác.
 - **Bài học:** Kiểm tra SHA hiện tại giúp tránh dùng kết quả CI của commit cũ.
 - **Bài học:** PR thay đổi GitHub Actions cần credential đủ quyền `Workflows: write`; CI xanh không tự cấp quyền.
 - **Bài học:** Branch protection và khả năng merge do GitHub thực thi; collector chỉ phản ánh kết quả đã xảy ra.
