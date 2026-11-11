@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "purpose": "isolated-non-production-cashflow",
+  "environment": "staging",
+  "cloudflarePagesProject": "reddit-editor-integration-staging",
+  "cloudflarePagesHost": "reddit-editor-integration-staging.pages.dev",
+  "cashflowWorker": "reddit-editor-cashflow-staging",
+  "d1": {
+    "name": "reddit-editor-staging-db",
+    "databaseId": "5dab001b-e703-49bf-974a-35251d630328",
+    "bindingNames": [
+      "DB",
+      "CASHFLOW_DB"
+    ]
+  },
+  "r2": {
+    "name": "reddit-editor-staging-evidence",
+    "workerBindingName": "EVIDENCE",
+    "publicAccess": false
+  },
+  "productionPageProjectForbidden": "duynguyen-reddit-editor",
+  "workerHttpPolicy": "health-only",
+  "workerScheduledProcessing": false,
+  "workerSecretsConfigured": false,
+  "productionDataCopied": false,
+  "stagingFrontendDeployed": false,
+  "oauthE2EVerified": false,
+  "bindingsVerified": true,
+  "verifiedAt": "2026-11-11"
+}
