@@ -22,7 +22,24 @@ export async function browserPreviewSmoke() {
     const address = route ? BASE + route + '/' : BASE;
     const response = await page.goto(address, { waitUntil: 'domcontentloaded', timeout: 30000 });
     assert.equal(response?.status(), 200, 'HTTP status for ' + address);
-    await page.locator('aside[aria-label="GitHub Pages preview"]').waitFor({ timeout: 20000 });
+    try {
+      await page.locator('aside[aria-label="GitHub Pages preview"]').waitFor({ timeout: 12000 });
+    } catch (error) {
+      const diagnostics = await page.evaluate(() => {
+        const notice = document.querySelector('aside[aria-label="GitHub Pages preview"]');
+        return {
+          url: location.href,
+          readyState: document.readyState,
+          previewScripts: [...document.scripts].map(s => s.src).filter(s => s.includes('preview-notice')),
+          noticePresent: !!notice,
+          noticeDisplay: notice ? getComputedStyle(notice).display : null,
+          noticeVisibility: notice ? getComputedStyle(notice).visibility : null,
+          bodyHtmlTail: document.body?.innerHTML.slice(-270)
+        };
+      }).catch(() => ({ location: page.url(), evaluationFailed: true }));
+      console.error('PREVIEW_NOTICE_DIAGNOSTIC', JSON.stringify({ route, diagnostics }));
+      throw error;
+    }
     const title = await page.title();
     assert.ok(title.trim().length > 2, 'Page title required: ' + route);
     const text = await page.locator('body').innerText();
