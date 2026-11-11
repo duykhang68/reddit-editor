@@ -1,0 +1,52 @@
+name: Preview Browser · 12 Utilities (Synthetic Only)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/browser-preview-smoke.mjs'
+      - '.github/workflows/preview-browser-smoke.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/browser-preview-smoke.mjs'
+      - '.github/workflows/preview-browser-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  chromium-preview:
+    name: Chromium E2E · 12 routes + safe interactions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked application packages
+        run: npm ci
+
+      - name: Install pinned test-only Chromium runner
+        run: |
+          npm install --no-save --package-lock=false --ignore-scripts playwright@1.56.1
+          npx playwright install --with-deps chromium
+
+      - name: Verify public Pages UI with synthetic text only
+        run: node scripts/browser-preview-smoke.mjs
+
+      - name: Upload public UI screenshots for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-preview-12-routes
+          path: artifacts/browser-preview/
+          if-no-files-found: ignore
+          retention-days: 7
