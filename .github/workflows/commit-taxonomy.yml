@@ -117,6 +117,17 @@ jobs:
                 owner, repo, sha: 'main', per_page: requested
               });
               commits = response.data;
+            } else if (/^0{40}$/.test(context.payload.before || '')) {
+              // GitHub sends an all-zero "before" SHA when main is first created.
+              // Comparing that sentinel SHA returns 404; enumerate real commits instead.
+              const { data } = await github.rest.repos.listCommits({
+                owner, repo, sha: context.sha, per_page: 100
+              });
+              commits = data;
+              core.info('Initial branch push: classified commits without comparing against zero SHA.');
+              if (commits.length === 100) {
+                core.warning('Initial branch push may exceed 100 commits; run manual backfill if needed.');
+              }
             } else {
               // Classify every pushed commit, including a merge commit.
               const { data } = await github.rest.repos.compareCommits({
