@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import {
   PREVIEW_BASE,
@@ -50,4 +51,18 @@ test('Pages preview transforms are idempotent and add noindex banner only to pre
   assert.match(preview, /name="robots" content="noindex,nofollow"/);
   assert.match(preview, /src="\/reddit-editor\/preview-notice.js"/);
   assert.equal(annotatePreviewHtml(rewritePreviewNavigation(preview)), preview);
+});
+
+test('Pages HTTP smoke tests read complete downloaded responses before grep', () => {
+  const workflow = readFileSync(
+    new URL('../../../.github/workflows/pages-preview.yml', import.meta.url),
+    'utf8'
+  );
+  const smoke = workflow.split('      - name: Smoke-test homepage and 12 deep links')[1];
+  assert.ok(smoke, 'Pages workflow must verify deployed routes');
+  assert.doesNotMatch(smoke, /\|\s*grep\s+-q/i,
+    'Do not pipe curl into grep -q under pipefail: curl can fail with exit 23');
+  assert.match(smoke, /--output "\$temp_dir\/home\.html"/);
+  assert.match(smoke, /--output "\$temp_dir\/page\.html"/);
+  assert.match(smoke, /grep -q 'preview-notice\.js' "\$temp_dir\/page\.html"/);
 });

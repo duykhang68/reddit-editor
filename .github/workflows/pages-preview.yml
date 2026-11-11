@@ -81,8 +81,15 @@ jobs:
         run: |
           set -euo pipefail
           base="${PAGES_URL%/}/"
-          curl -fsSL --retry 8 --retry-delay 5 --retry-all-errors "$base" \
-            | grep -q 'preview-notice.js'
+          temp_dir="$(mktemp -d)"
+          trap 'rm -rf "$temp_dir"' EXIT
+
+          # Download the full response before checking it: grep -q closes a
+          # pipe early, making curl exit 23 under bash -o pipefail.
+          curl -fsSL --retry 8 --retry-delay 5 --retry-all-errors \
+            --output "$temp_dir/home.html" "$base"
+          grep -q 'preview-notice.js' "$temp_dir/home.html"
+
           for route in \
             cashflow-intelligence ga4-insights voice-studio typesetting-tools \
             youtube-subtitle-writer wikipedia-writer rollback-dashboard \
@@ -90,7 +97,9 @@ jobs:
             payroll-insights expenses
           do
             curl -fsSL --retry 8 --retry-delay 5 --retry-all-errors \
-              "${base}${route}/" | grep -qi '<html'
+              --output "$temp_dir/page.html" "${base}${route}/"
+            grep -qi '<html' "$temp_dir/page.html"
+            grep -q 'preview-notice.js' "$temp_dir/page.html"
             echo "PAGE_OK: ${base}${route}/"
           done
           echo "STATIC_PREVIEW_OK: 12/12 pages. Backend/OAuth unverified."
