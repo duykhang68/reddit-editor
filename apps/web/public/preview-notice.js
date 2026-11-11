@@ -16,4 +16,29 @@
     zIndex: '99999'
   });
   document.body.prepend(notice);
+
+  // Public GitHub Pages is an unauthenticated visual preview. In particular,
+  // never invite users to enter a GitHub PAT or dispatch rollback from here.
+  // This is a UI guard only; server-side authentication is still mandatory.
+  if (location.hostname === 'duykhang68.github.io' &&
+      location.pathname === '/reddit-editor/rollback-dashboard/') {
+    document.querySelectorAll('input,button,select,textarea').forEach(control => {
+      if (control instanceof HTMLInputElement && control.type === 'password') control.value = '';
+      control.disabled = true;
+    });
+    const warning = document.createElement('p');
+    warning.setAttribute('role', 'note');
+    warning.textContent = 'Rollback trên GitHub Pages chỉ để xem giao diện. Không nhập GitHub PAT; mọi nút thao tác đã bị khóa trên bản preview công khai.';
+    Object.assign(warning.style, {
+      margin: '12px auto',
+      maxWidth: '1100px',
+      padding: '12px 18px',
+      background: '#fff',
+      color: '#a33d18',
+      border: '1px solid #f0bb9b',
+      borderRadius: '10px',
+      font: '600 13px/1.6 system-ui, sans-serif'
+    });
+    notice.insertAdjacentElement('afterend', warning);
+  }
 })();
