@@ -1,0 +1,96 @@
+name: Preview · GitHub Pages (Static Only)
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages-preview-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate-preview:
+    name: Build and verify 12 static routes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Run Editor regression tests
+        run: npm run check
+
+      - name: Build isolated preview with project base path
+        env:
+          GITHUB_PAGES_PREVIEW: 'true'
+        run: npm run build
+
+      - name: Adapt navigation and verify every route
+        env:
+          GITHUB_PAGES_PREVIEW: 'true'
+        run: node scripts/prepare-pages-preview.mjs
+
+      - name: Upload validated static Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: apps/web/dist/
+
+  deploy-preview:
+    name: Deploy static preview (never Cloudflare production)
+    needs: validate-preview
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Deploy static artifact
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+      - name: Smoke-test homepage and 12 deep links
+        env:
+          PAGES_URL: ${{ steps.deployment.outputs.page_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="${PAGES_URL%/}/"
+          curl -fsSL --retry 8 --retry-delay 5 --retry-all-errors "$base" \
+            | grep -q 'preview-notice.js'
+          for route in \
+            cashflow-intelligence ga4-insights voice-studio typesetting-tools \
+            youtube-subtitle-writer wikipedia-writer rollback-dashboard \
+            vocabulary-insights starbucks-insights highlands-insights \
+            payroll-insights expenses
+          do
+            curl -fsSL --retry 8 --retry-delay 5 --retry-all-errors \
+              "${base}${route}/" | grep -qi '<html'
+            echo "PAGE_OK: ${base}${route}/"
+          done
+          echo "STATIC_PREVIEW_OK: 12/12 pages. Backend/OAuth unverified."

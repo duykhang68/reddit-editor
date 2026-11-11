@@ -3,6 +3,8 @@ import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 const ROOT = fileURLToPath(new URL('.', import.meta.url));
 export default defineConfig({
+  // GitHub Pages hosts this repository under /reddit-editor/. Cloudflare keeps /.
+  base: process.env.GITHUB_PAGES_PREVIEW === 'true' ? '/reddit-editor/' : '/',
   build: {
     rollupOptions: {
       input: {
