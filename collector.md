@@ -5,27 +5,27 @@
 > Các PR lịch sử không có bằng chứng được ghi **chưa xác minh nguồn merge**,
 > không tự suy đoán là merge thủ công hay tự động.
 
-Cập nhật: **2026-11-11 03:59 UTC** · Repository: `duykhang68/reddit-editor`
+Cập nhật: **2026-11-12 08:25 UTC** · Repository: `duykhang68/reddit-editor`
 
 ## 📊 Dashboard
 
 | Chỉ số | Giá trị |
 |---|---:|
-| PR đã merge (tối đa 300 PR gần đây) | 7 |
+| PR đã merge (tối đa 300 PR gần đây) | 9 |
 | AUTO-MERGED có bằng chứng | 3 |
 | Auto-merge PR thường | 3 |
 | Auto-merge PR thay đổi workflow | 0 |
-| Nguồn merge chưa xác minh | 4 |
+| Nguồn merge chưa xác minh | 6 |
 
 ### Phân bố bằng chứng
 
 ```mermaid
 pie showData
     "Auto-merge verified" : 3
-    "Chưa xác minh" : 4
+    "Chưa xác minh" : 6
 ```
 
-`Auto-merge ` ████████░░░░░░░░░░ **3/7**
+`Auto-merge ` ██████░░░░░░░░░░░░ **3/9**
 
 ## ✅ Vì sao từng PR được auto-merge?
 
@@ -42,7 +42,7 @@ pie showData
 - **Bài học:** Kiểm tra SHA hiện tại giúp tránh dùng kết quả CI của commit cũ.
 - **Bài học:** PR thay đổi GitHub Actions cần credential đủ quyền `Workflows: write`; CI xanh không tự cấp quyền.
 - **Bài học:** Branch protection và khả năng merge do GitHub thực thi; collector chỉ phản ánh kết quả đã xảy ra.
-- **Khoảng trống dữ liệu:** 4 PR đã merge chưa có bằng chứng collector; không tính là auto-merge.
+- **Khoảng trống dữ liệu:** 6 PR đã merge chưa có bằng chứng collector; không tính là auto-merge.
 
 ## 🛡️ Giới hạn và phương pháp
 
