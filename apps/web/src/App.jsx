@@ -22,6 +22,7 @@ import {emptySeries, editableSeries, extractSeriesFromHTML, withSeriesHTML, norm
 import './components/series.css';
 
 const EDITOR_QUICK_LINKS = [
+  {title: 'MCC Cashback Database', description: 'Tra cứu MCC, Visa/Mastercard, ngân hàng, hoàn tiền và nguồn chính thức từ Google Sheets.', href: '/mcc-cashback/', symbol: '%', accent: 'expenses'},
   {title: 'Tet Dinh Mui · Cashflow Intelligence', description: 'Telegram giao dịch ngân hàng, dòng tiền riêng tư và Smart Insights Cloudflare.', href: '/cashflow-intelligence/', symbol: '₫', accent: 'expenses'},
   {title: 'GA4 Insights · Blog Analytics', description: 'Số liệu Google Analytics 4 của blog: người dùng, nguồn truy cập, bài viết và thiết bị.', href: '/ga4-insights/', symbol: '↗', accent: 'expenses'},
   {title: 'Voice Studio · Text to WAV', description: 'Tạo giọng thuyết minh từ văn bản bằng Azure, Gemini hoặc Groq và xuất WAV.', href: '/voice-studio/', symbol: '◉', accent: 'expenses'},

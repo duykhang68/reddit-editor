@@ -14,6 +14,7 @@ export default defineConfig({
         highlandsInsights: resolve(ROOT, 'highlands-insights/index.html'),
         payrollInsights: resolve(ROOT, 'payroll-insights/index.html'),
         expenses: resolve(ROOT, 'expenses/index.html'),
+        mccCashback: resolve(ROOT, 'mcc-cashback/index.html'),
         wikipediaWriter: resolve(ROOT, 'wikipedia-writer/index.html'),
         youtubeSubtitleWriter: resolve(ROOT, 'youtube-subtitle-writer/index.html')
       }
