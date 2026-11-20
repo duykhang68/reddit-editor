@@ -7,7 +7,7 @@ export function parseMccValues(values) {
   const names = values[0].map(v => String(v || '').trim());
   for (const item of ['MCC','Ngân hàng','Visa / Mastercard','Cashback rate','Nguồn chính thức (URL)'])
     if (!names.includes(item)) throw Error('Thiếu cột dữ liệu: ' + item);
-  return values.slice(1).filter(v => /^\\d{4}$/.test(String(v?.[0] || '').trim())).map(row => {
+  return values.slice(1).filter(v => /^\d{4}$/.test(String(v?.[0] || '').trim())).map(row => {
     const item = {};
     FIELDS.forEach((key,i) => item[key] = String(row[i] ?? '').trim());
     item.network = /^(visa|mastercard)$/i.test(item.network) ? item.network : 'Khác';
